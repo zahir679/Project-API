@@ -1,5 +1,6 @@
 package com.bluechickenfm.song;
 
+import java.lang.Math;
 import java.time.LocalDate;
 
 public class Song {
@@ -9,6 +10,8 @@ public class Song {
     private int artist_id;
     private int album_id;
     private LocalDate release_date;
+    private int release_year;
+    private double release_decade;
     private String language;
     //private String platforms;
 
@@ -23,7 +26,17 @@ public class Song {
         this.artist_id = artist_id;
         this.album_id = album_id;
         this.release_date = release_date;
+        this.release_year = release_date.getYear();
+        this.release_decade = Math.floor(release_year/10)*10;
         this.language = language;
+    }
+
+    public int getRelease_year() {
+        return release_year;
+    }
+
+    public void setRelease_year(int release_year) {
+        this.release_year = release_year;
     }
 
     public String getName() {
