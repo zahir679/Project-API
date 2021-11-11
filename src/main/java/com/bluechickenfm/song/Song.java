@@ -4,6 +4,7 @@ import java.lang.Math;
 import java.time.LocalDate;
 
 public class Song {
+    private int id;
     private String name;
     private String genre;
     private int duration;
@@ -19,16 +20,25 @@ public class Song {
 
     }
 
-    public Song(String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language) {
+    public Song(int id, String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, int release_year, double release_decade, String language) {
+        this.id = id;
         this.name = name;
         this.genre = genre;
         this.duration = duration;
         this.artist_id = artist_id;
         this.album_id = album_id;
         this.release_date = release_date;
-        this.release_year = release_date.getYear();
-        this.release_decade = Math.floor(release_year/10)*10;
+        this.release_year = release_year;
+        this.release_decade = release_decade;
         this.language = language;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getRelease_year() {
