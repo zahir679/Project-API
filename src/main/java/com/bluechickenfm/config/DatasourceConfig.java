@@ -1,4 +1,4 @@
-package com.bluechickenfm.demo.config;
+package com.bluechickenfm.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;

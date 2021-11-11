@@ -1,4 +1,4 @@
-package com.bluechickenfm.demo;
+package com.bluechickenfm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
