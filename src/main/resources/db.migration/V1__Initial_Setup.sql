@@ -1,13 +1,13 @@
 CREATE TABLE artists(
   id BIGSERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
+  artist_name TEXT NOT NULL,
   nationality TEXT NOT NULL,
-  biggest_hit TEXT NOT NULL,
+  biggest_hit TEXT NOT NULL
 );
 
 CREATE TABLE albums(
     id BIGSERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    album_name TEXT NOT NULL,
     artist_id INT REFERENCES artists(id),
     genre TEXT NOT NULL,
     release_date DATE NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE albums(
 
 CREATE TABLE songs (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    song_name TEXT NOT NULL,
     genre TEXT NOT NULL,
     duration INT NOT NULL,
     artist_id INT REFERENCES artists(id),
