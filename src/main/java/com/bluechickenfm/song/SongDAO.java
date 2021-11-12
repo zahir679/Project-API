@@ -2,12 +2,13 @@ package com.bluechickenfm.song;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface SongDAO {
 
     List<Song> getAllSongs();
 
-    Song getSongById(int id);
+    Optional<Song> getSongById(int id);
 
     List<Song> getSongsByArtist(int artist_id);
 
@@ -36,4 +37,6 @@ public interface SongDAO {
     int deleteSong(int id);
 
     void updateSongReleaseDate(int id, LocalDate release_date);
+
+    List<Song> getSongsByYear(int release_year);
 }

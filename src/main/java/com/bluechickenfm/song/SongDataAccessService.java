@@ -9,7 +9,7 @@ import java.util.Optional;
 //public class SongDataAccessService {
 
     @Repository
-    public class SongDataAccessService implements SongDAO {
+    public abstract class SongDataAccessService implements SongDAO {
 
         private final JdbcTemplate jdbcTemplate;
 

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class SongService {
     private SongDAO songDAO;
@@ -12,7 +14,7 @@ public class SongService {
         return songDAO.getAllSongs();
     }
 
-    public Song getSongById(int id) {
+    public Optional<Song> getSongById(int id) {
         return songDAO.getSongById(id);
     }
 

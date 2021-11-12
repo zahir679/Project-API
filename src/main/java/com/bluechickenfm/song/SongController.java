@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SongController {
@@ -22,7 +23,8 @@ public class SongController {
 
     //Method to get a single song by its id (primary key)
     @GetMapping("/songs/{id}")
-    public @ResponseBody Song getSongById(@PathVariable int id){
+    public @ResponseBody
+    Optional<Song> getSongById(@PathVariable int id){
         return songService.getSongById(id);
     }
 
