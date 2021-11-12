@@ -8,10 +8,12 @@ import java.util.Optional;
 
 //public class SongDataAccessService {
 
-    @Repository
-    public abstract class SongDataAccessService implements SongDAO {
+@Repository("chicken")
+    public class SongDataAccessService implements SongDAO{
+    //    public abstract class SongDataAccessService implements SongDAO {
 
-        private final JdbcTemplate jdbcTemplate;
+        private JdbcTemplate jdbcTemplate;
+    //        private final JdbcTemplate jdbcTemplate;
 
         public SongDataAccessService(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;

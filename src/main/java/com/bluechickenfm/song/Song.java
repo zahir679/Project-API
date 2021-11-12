@@ -16,8 +16,15 @@ public class Song {
     private String language;
     //private String platforms;
 
-    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
+    public Song() {}
 
+    public Song(String name) {this.name = name;}
+//    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
+//    }
+
+    public Song(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Song(int id, String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, int release_year, double release_decade, String language) {
