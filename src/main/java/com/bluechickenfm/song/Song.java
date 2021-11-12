@@ -16,7 +16,7 @@ public class Song {
     private String language;
     //private String platforms;
 
-    public Song(){
+    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
 
     }
 

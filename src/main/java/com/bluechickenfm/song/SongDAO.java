@@ -7,7 +7,7 @@ public interface SongDAO {
 
     List<Song> getAllSongs();
 
-    Song getSongById(int id)
+    Song getSongById(int id);
 
     List<Song> getSongsByArtist(int artist_id);
 
@@ -17,7 +17,7 @@ public interface SongDAO {
 
     List<Song> getSongsByDecade(int release_decade);
 
-    void addSong(Song song);
+    int addSong(Song song);
 
     void updateSong(Song song);
 
@@ -33,7 +33,7 @@ public interface SongDAO {
 
     void updateSongAlbumId();
 
-    void deleteSong();
+    int deleteSong(int id);
 
     void updateSongReleaseDate(int id, LocalDate release_date);
 

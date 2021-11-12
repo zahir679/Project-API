@@ -118,7 +118,5 @@ public class SongService {
     }
 
     //DELETE
-    public void deleteSong(int id) {
-        songDAO.deleteSong();
-    }
+    public void deleteSong(int id) { songDAO.deleteSong(id); }
 }
