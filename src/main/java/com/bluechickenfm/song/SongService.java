@@ -1,7 +1,9 @@
 package com.bluechickenfm.song;
 
 import com.bluechickenfm.exception.ResourceNotFound;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -72,11 +74,18 @@ public class SongService {
 
     //POST
     public void addSong(Song song) {
-        songDAO.addSong(song);
+        try {
+            songDAO.addSong(song);
+        }catch()
     }
 
     //PUT
     public void updateSong(int id, Song song) {
+        Optional<Song> personOptional = SongDAO.getSongById(id);
+        if(personOPtional.isEmpty()){
+            throw new ResourceNotFound("")
+        }
+        personDAO.deletePerson(id);
         songDAO.updateSong(song);
     }
 
