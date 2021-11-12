@@ -36,4 +36,6 @@ public interface SongDAO {
     void deleteSong();
 
     void updateSongReleaseDate(int id, LocalDate release_date);
+
+    List<Song> getSongsByYear(int release_year);
 }
