@@ -11,16 +11,24 @@ public class Song {
     private int artist_id;
     private int album_id;
     private LocalDate release_date;
-    private int release_year;
-    private double release_decade;
+//    private int release_year;
+//    private double release_decade;
     private String language;
-    //private String platforms;
+    private String platform;
 
-    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
 
+    public Song() {}
+
+    public Song(String name) {this.name = name;}
+//    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
+//    }
+
+    public Song(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public Song(int id, String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, int release_year, double release_decade, String language) {
+    public Song(int id, String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, int release_year, double release_decade, String language, String platform) {
         this.id = id;
         this.name = name;
         this.genre = genre;
@@ -28,9 +36,8 @@ public class Song {
         this.artist_id = artist_id;
         this.album_id = album_id;
         this.release_date = release_date;
-        this.release_year = release_year;
-        this.release_decade = release_decade;
         this.language = language;
+        this.platform=platform;
     }
 
     public int getId() {
@@ -41,13 +48,6 @@ public class Song {
         this.id = id;
     }
 
-    public int getRelease_year() {
-        return release_year;
-    }
-
-    public void setRelease_year(int release_year) {
-        this.release_year = release_year;
-    }
 
     public String getName() {
         return name;
@@ -59,6 +59,14 @@ public class Song {
 
     public String getGenre() {
         return genre;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public void setGenre(String genre) {

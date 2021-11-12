@@ -2,16 +2,18 @@ package com.bluechickenfm.song;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
 
 //public class SongDataAccessService {
+@Repository("chicken")
+    public class SongDataAccessService implements SongDAO{
+    //    public abstract class SongDataAccessService implements SongDAO {
 
-    @Repository
-    public class SongDataAccessService implements SongDAO {
-
-        private final JdbcTemplate jdbcTemplate;
+        private JdbcTemplate jdbcTemplate;
+    //        private final JdbcTemplate jdbcTemplate;
 
         public SongDataAccessService(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
@@ -30,13 +32,13 @@ import java.util.Optional;
         @Override
         public int addSong(Song song) {
             var sql = """
-                INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform,)
+                INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                  """;
             return jdbcTemplate.update(
                     sql,
                     song.getName(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
-                    , song.getRelease_date(), song.getRelease_year(), song.getLanguage()
+                    , song.getRelease_date(), song.getLanguage(), song.getPlatform()
             );
         }
 
