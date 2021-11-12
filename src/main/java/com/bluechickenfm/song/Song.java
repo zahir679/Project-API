@@ -1,11 +1,10 @@
 package com.bluechickenfm.song;
 
-import java.lang.Math;
 import java.time.LocalDate;
 
 public class Song {
     private int id;
-    private String name;
+    private String song_name;
     private String genre;
     private int duration;
     private int artist_id;
@@ -16,29 +15,18 @@ public class Song {
     private String language;
     private String platform;
 
-
-    public Song() {}
-
-    public Song(String name) {this.name = name;}
-//    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform){
-//    }
-
-    public Song(int id, String name) {
+    public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform) {
         this.id = id;
-        this.name = name;
-    }
-
-    public Song(int id, String name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, int release_year, double release_decade, String language, String platform) {
-        this.id = id;
-        this.name = name;
+        this.song_name = song_name;
         this.genre = genre;
         this.duration = duration;
         this.artist_id = artist_id;
         this.album_id = album_id;
         this.release_date = release_date;
         this.language = language;
-        this.platform=platform;
+        this.platform = platform;
     }
+
 
     public int getId() {
         return id;
@@ -49,12 +37,12 @@ public class Song {
     }
 
 
-    public String getName() {
-        return name;
+    public String getSong_name() {
+        return song_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSong_name(String song_name) {
+        this.song_name = song_name;
     }
 
     public String getGenre() {
@@ -116,7 +104,7 @@ public class Song {
     @Override
     public String toString() {
         return "Song{" +
-                "name='" + name + '\'' +
+                "name='" + song_name + '\'' +
                 ", genre='" + genre + '\'' +
                 ", duration=" + duration +
                 ", artist_id=" + artist_id +

@@ -18,8 +18,6 @@ public class SongService {
     }
 
     //GET
-
-
     public List<Song> getAllSongs() {
         return songDAO.getAllSongs();
     }
@@ -54,9 +52,9 @@ public class SongService {
     }
 
 //    //PUT
-//    public void updateSong(int id, Song song) {
-//        songDAO.updateSong(song);
-//    }
+    public void updateSong(int id, Song song) {
+        songDAO.updateSong(id, song);
+    }
 //
 //    public void updateSongName(int id, String name) {
 //        songDAO.updateSongName(id, name);

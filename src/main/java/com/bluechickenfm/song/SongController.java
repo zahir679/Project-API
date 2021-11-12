@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/songs")
+@RequestMapping ("/api")
 public class SongController {
     private SongService songService;
 
@@ -29,12 +29,12 @@ public class SongController {
         return songService.getSongById(id);
     }
 
-//    //Method to get songs by artist_id
+    //Method to get songs by artist_id
 //    @GetMapping("/songs/{artist_id}")
 //    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
 //        return songService.getSongsByArtist(artist_id);
 //    }
-//
+
 //    //Method to get songs by album_id
 //    @GetMapping("/songs/{album_id}")
 //    public @ResponseBody List<Song> getSongsByAlbum(@PathVariable int album_id){
@@ -61,18 +61,18 @@ public class SongController {
 
     //POST
     //Add song
-    @PostMapping
+    @PostMapping("/add")
     public void addSong(@RequestBody Song song) {
         songService.addSong(song);
     }
 
     //PUT
     //Method to update a whole song
-//    @PutMapping("/songs/{id}")
-//    public void updateSong(@PathVariable int id,
-//                           @RequestBody Song song) {
-//        songService.updateSong(id, song);
-//    }
+    @PutMapping("/songs/{id}")
+    public void updateSong(@PathVariable int id,
+                           @RequestBody Song song) {
+        songService.updateSong(id, song);
+    }
 
 //    //Method to update a given song's name
 //    @PutMapping("/songs/{id}")
