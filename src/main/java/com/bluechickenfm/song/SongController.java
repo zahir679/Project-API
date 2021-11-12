@@ -73,41 +73,41 @@ public class SongController {
         songService.updateSong(id, song);
     }
 
-    //Method to update a given song's name
-    @PutMapping("/songs/{id}")
-    public void updateSongName(@PathVariable int id, String name) {
-        songService.updateSongName(id, name);
-    }
-
-    //Method to update a given song's genre
-    @PutMapping("/songs/{id}")
-    public void updateSongGenre(@PathVariable int id, String genre) {
-        songService.updateSongGenre(id, genre);
-    }
-
-    //Method to update a given song's artist_id
-    @PutMapping("/songs/{id}")
-    public void updateSongArtistId(@PathVariable int id, int artist_id) {
-        songService.updateSongArtistId(id, artist_id);
-    }
-
-    //Method to update a given song's album_id
-    @PutMapping("/songs/{id}")
-    public void updateSongAlbumId(@PathVariable int id, String album_id) {
-        songService.updateSongAlbumId(id, album_id);
-    }
-
-    //Method to update a given song's release date
-    @PutMapping("/songs/{id}")
-    public void updateSongReleaseDate(@PathVariable int id, LocalDate release_date) {
-        songService.updateSongReleaseDate(id, release_date);
-    }
-
-    //Method to update a given song's language
-    @PutMapping("/songs/{id}")
-    public void updateSongLanguage(@PathVariable int id, String language) {
-        songService.updateSongLanguage(id, language);
-    }
+//    //Method to update a given song's name
+//    @PutMapping("/songs/{id}")
+//    public void updateSongName(@PathVariable int id, String name) {
+//        songService.updateSongName(id, name);
+//    }
+//
+//    //Method to update a given song's genre
+//    @PutMapping("/songs/{id}")
+//    public void updateSongGenre(@PathVariable int id, String genre) {
+//        songService.updateSongGenre(id, genre);
+//    }
+//
+//    //Method to update a given song's artist_id
+//    @PutMapping("/songs/{id}")
+//    public void updateSongArtistId(@PathVariable int id, int artist_id) {
+//        songService.updateSongArtistId(id, artist_id);
+//    }
+//
+//    //Method to update a given song's album_id
+//    @PutMapping("/songs/{id}")
+//    public void updateSongAlbumId(@PathVariable int id, String album_id) {
+//        songService.updateSongAlbumId(id, album_id);
+//    }
+//
+//    //Method to update a given song's release date
+//    @PutMapping("/songs/{id}")
+//    public void updateSongReleaseDate(@PathVariable int id, LocalDate release_date) {
+//        songService.updateSongReleaseDate(id, release_date);
+//    }
+//
+//    //Method to update a given song's language
+//    @PutMapping("/songs/{id}")
+//    public void updateSongLanguage(@PathVariable int id, String language) {
+//        songService.updateSongLanguage(id, language);
+//    }
 
     //DELETE
     //Method to delete a song
