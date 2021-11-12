@@ -11,16 +11,15 @@ public class SongRowMapper implements RowMapper<Song> {
         @Override
         public Song mapRow(ResultSet resultSet, int i) throws SQLException {
             return new Song(
-                    resultSet.getString("name")
-//                    resultSet.getInt("id")
-//                    resultSet.getString("song_name"),
-//                    resultSet.getString("genre"),
-//                    resultSet.getInt("duration"),
-//                    resultSet.getInt("artist_id"),
-//                    resultSet.getInt("album_id"),
-//                    LocalDate.parse(resultSet.getString("release_date")),
-//                    resultSet.getString("language"),
-//                    resultSet.getString("platform")
+                    resultSet.getInt("id"),
+                    resultSet.getString("song_name"),
+                    resultSet.getString("genre"),
+                    resultSet.getInt("duration"),
+                    resultSet.getInt("artist_id"),
+                    resultSet.getInt("album_id"),
+                    LocalDate.parse(resultSet.getString("release_date")),
+                    resultSet.getString("languages"),
+                    resultSet.getString("platform")
             );
         }
     }

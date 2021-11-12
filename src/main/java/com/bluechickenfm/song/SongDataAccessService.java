@@ -2,7 +2,6 @@ package com.bluechickenfm.song;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,7 @@ import java.util.Optional;
         @Override
         public List<Song> getAllSongs() {
             var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
                 LIMIT 100;
                  """;
@@ -37,9 +36,21 @@ import java.util.Optional;
                  """;
             return jdbcTemplate.update(
                     sql,
-                    song.getName(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
+                    song.getSong_name(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
                     , song.getRelease_date(), song.getLanguage(), song.getPlatform()
             );
+        }
+
+        @Override
+        public int updateSong(int id, Song song){
+            var sql = """
+                    UPDATE songs
+                    SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
+                    WHERE id = ? """;
+            return jdbcTemplate.update(sql,song.getSong_name(), song.getGenre(), song.getDuration(),
+                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguage(), song.getPlatform(),
+                    song.getId());
+
         }
 
         @Override

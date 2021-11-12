@@ -1,6 +1,5 @@
 package com.bluechickenfm.song;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +12,7 @@ public interface SongDAO {
 //    List<Song> getSongsByGenre(String genre);
 //    List<Song> getSongsByDecade(int release_decade);
     int addSong(Song song);
-//    void updateSong(Song song);
+    int updateSong(int id, Song song);
 //    void updateSongName(int id, String name);
 //    void updateSongGenre();
 //    void updateSongDuration();
