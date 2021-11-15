@@ -1,5 +1,6 @@
 package com.bluechickenfm.song;
 
+import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.ResourceNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class SongService {
             throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
         }
         return songDAO.getSongById(id);
+    }
+
+    public List<Song> getSongByName(String name) {
+        Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
+        if(songByNameOptional.isEmpty()){
+            throw new ResourceNotFound("Sorry! " + name + " has not been found :( Please try again.");
+        }
+        return songDAO.getSongByName(name);
     }
 
     public List<Song> getSongsByArtist(int artist_id) {
@@ -74,26 +83,36 @@ public class SongService {
 
     //POST
     public void addSong(Song song) {
-        try {
-            songDAO.addSong(song);
-        }catch()
+        //Exception for if song already exists
+        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getName()));
+        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
+            throw new Conflict("Song already exists!");
+        }
+        songDAO.addSong(song);
     }
 
     //PUT
     public void updateSong(int id, Song song) {
-        Optional<Song> personOptional = SongDAO.getSongById(id);
-        if(personOPtional.isEmpty()){
-            throw new ResourceNotFound("")
+        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
+        if(songOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
         }
-        personDAO.deletePerson(id);
         songDAO.updateSong(song);
     }
 
     public void updateSongName(int id, String name) {
+        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
+        if(songOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
+        }
         songDAO.updateSongName(id, name);
     }
 
     public void updateSongGenre(int id, String genre) {
+        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
+        if(songOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
+        }
         songDAO.updateSongGenre();
     }
 

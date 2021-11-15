@@ -38,4 +38,6 @@ public interface SongDAO {
     void updateSongReleaseDate(int id, LocalDate release_date);
 
     List<Song> getSongsByYear(int release_year);
+
+    List<Song> getSongByName(String name);
 }

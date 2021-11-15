@@ -61,5 +61,10 @@ import java.util.Optional;
                     .findFirst();
         }
 
+        @Override
+        public Optional<Song> getSongByName(String name) {
+
+        }
+
     }
 
