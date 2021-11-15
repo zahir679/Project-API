@@ -86,7 +86,7 @@ public class SongService {
 //            throw new ResourceNotFound("Sorry! No songs found for " + release_decade + ":( Please try again.");
 //        }
 //        return songDAO.getSongsByDecade(release_decade);
-    }
+//    }
 
 
 //    public List<Song> getSongsByArtist(int artist_id) {
@@ -192,5 +192,9 @@ public class SongService {
 
 
     //DELETE
-    public void deleteSong(int id) { songDAO.deleteSong(id); }
+    public void deleteSong(int id) {
+        if(DoesSongExist.check(id)) {
+            songDAO.deleteSong(id);
+        }
+    }
 }
