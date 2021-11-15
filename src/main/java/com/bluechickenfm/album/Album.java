@@ -3,6 +3,8 @@ package com.bluechickenfm.album;
 import java.time.LocalDate;
 import java.util.Objects;
 
+
+
 public class Album {
     private String name;
     private String artistId;

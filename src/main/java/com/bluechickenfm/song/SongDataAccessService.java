@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 //public class SongDataAccessService {
+@Repository("chicken")
+    public class SongDataAccessService implements SongDAO{
+    //    public abstract class SongDataAccessService implements SongDAO {
 
-    @Repository
-    public class SongDataAccessService implements SongDAO {
-
-        private final JdbcTemplate jdbcTemplate;
+        private JdbcTemplate jdbcTemplate;
+    //        private final JdbcTemplate jdbcTemplate;
 
         public SongDataAccessService(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
@@ -20,7 +21,7 @@ import java.util.Optional;
         @Override
         public List<Song> getAllSongs() {
             var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
                 LIMIT 100;
                  """;
@@ -30,14 +31,26 @@ import java.util.Optional;
         @Override
         public int addSong(Song song) {
             var sql = """
-                INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform,)
+                INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                  """;
             return jdbcTemplate.update(
                     sql,
-                    song.getName(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
-                    , song.getRelease_date(), song.getRelease_year(), song.getLanguage()
+                    song.getSong_name(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
+                    , song.getRelease_date(), song.getLanguage(), song.getPlatform()
             );
+        }
+
+        @Override
+        public int updateSong(int id, Song song){
+            var sql = """
+                    UPDATE songs
+                    SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
+                    WHERE id = ? """;
+            return jdbcTemplate.update(sql,song.getSong_name(), song.getGenre(), song.getDuration(),
+                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguage(), song.getPlatform(),
+                    song.getId());
+
         }
 
         @Override
@@ -50,21 +63,23 @@ import java.util.Optional;
         }
 
         @Override
-        public Optional<Song> getSongById(int id) {
+        public List<Song> getSongById(int id) {
             var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
                 FROM songs
                 WHERE id = ?
                  """;
-            return jdbcTemplate.query(sql, new SongRowMapper(), id)
-                    .stream()
-                    .findFirst();
+            return jdbcTemplate.query(sql, new SongRowMapper(), id);
         }
 
         @Override
-        public Optional<Song> getSongByName(String name) {
-
+        public List<Song> getSongByName(String name) {
+            var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
+                FROM songs
+                WHERE name = ?
+                 """;
+            return jdbcTemplate.query(sql, new SongRowMapper(), name);
         }
-
     }
 

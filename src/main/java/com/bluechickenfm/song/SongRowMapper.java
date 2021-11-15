@@ -18,7 +18,7 @@ public class SongRowMapper implements RowMapper<Song> {
                     resultSet.getInt("artist_id"),
                     resultSet.getInt("album_id"),
                     LocalDate.parse(resultSet.getString("release_date")),
-                    resultSet.getString("language"),
+                    resultSet.getString("languages"),
                     resultSet.getString("platform")
             );
         }
