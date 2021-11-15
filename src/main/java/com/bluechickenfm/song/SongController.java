@@ -1,5 +1,6 @@
 package com.bluechickenfm.song;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,6 +79,11 @@ public class SongController {
         songService.updateSong(id, song);
     }
 
+    @PatchMapping(path = "/songs/{id}", consumes = "application/json-patch+json")
+    public void updateSongByPatch(@PathVariable int id,
+                                  @RequestBody JsonPatch patch) {
+        songService.updateSongByPatch(id, patch);
+    }
 
 
 //    //Method to update a given song's name

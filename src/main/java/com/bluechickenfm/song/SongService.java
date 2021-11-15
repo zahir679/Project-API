@@ -4,8 +4,13 @@ import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.DoesSongExist;
 import com.bluechickenfm.exception.ResourceNotFound;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -125,6 +130,44 @@ public class SongService {
             songDAO.updateSong(id, song);
         }
     }
+
+    public void updateSongByPatch(int id, JsonPatch patch) {
+            if(DoesSongExist.check(id)) {
+                Song song  = songDAO.getSongById(id);
+                try {
+                    Song songPatched = applyPatchToSong(patch, (Song) song);
+                    songDAO.updateSong(songPatched);
+                } catch (JsonPatchException e) {
+                    e.printStackTrace();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            songService.updateCustomer(customerPatched);
+            return ResponseEntity.ok(customerPatched);
+//        } catch (JsonPatchException | JsonProcessingException e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        } catch (CustomerNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+    }
+
+        public Song applyPatchToSong(JsonPatch patch, Song targetSong)
+                throws JsonPatchException, JsonProcessingException {
+            JsonNode patched = patch.apply(objectMapper.convertValue(targetSong, JsonNode.class));
+            return objectMapper.treeToValue(patched, Song.class);
+        }
+
+//    @RequestMapping(value = "/heavyresource/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<?> partialUpdateGeneric(
+//            @RequestBody Map<String, Object> updates,
+//            @PathVariable("id") String id) {
+//
+//        heavyResourceRepository.save(updates, id);
+//        return ResponseEntity.ok("resource updated");
+//    }
 
 //    public void updateSongName(int id, String name) {
 //        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));

@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 //public class SongDataAccessService {
 @Repository("chicken")
@@ -65,7 +64,7 @@ import java.util.Optional;
         }
 
         @Override
-        public List<Song> getSongById(int id) {
+        public Song getSongById(int id) {
             var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
                 FROM songs
