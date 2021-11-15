@@ -2,9 +2,7 @@ package com.bluechickenfm.song;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping ("/api")
@@ -25,8 +23,14 @@ public class SongController {
     //Method to get a single song by its id (primary key)
     @GetMapping("/songs/{id}")
     public @ResponseBody
-    Optional<Song> getSongById(@PathVariable int id){
+    List<Song> getSongById(@PathVariable int id){
         return songService.getSongById(id);
+    }
+
+    @GetMapping("/songs/name")
+    public @ResponseBody
+    List<Song> getSongByName(String name){
+        return songService.getSongByName(name);
     }
 
     //Method to get songs by artist_id
@@ -73,6 +77,8 @@ public class SongController {
                            @RequestBody Song song) {
         songService.updateSong(id, song);
     }
+
+
 
 //    //Method to update a given song's name
 //    @PutMapping("/songs/{id}")
