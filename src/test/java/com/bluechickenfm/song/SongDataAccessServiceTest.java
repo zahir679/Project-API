@@ -8,6 +8,8 @@ import org.flywaydb.core.internal.database.base.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -28,17 +30,18 @@ class SongDataAccessServiceTest {
 //        musicdb = mock(List<Song>);
 
     }
+
     @Test
-        @DisplayName("Test to see if songs can be got by id")
-        void canGetSongsById() {
-            // given
+    @DisplayName("Test to see if songs can be got by id")
+    void canGetSongsById() {
+        // given
 
-            Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018,9,15),"Korean" , "Spotify");
-            List<Song> songs = List.of(firstSong);
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong);
 
-            // when
-            when(songDAO.getSongById(1)).thenReturn(Optional.of(firstSong));
-            Optional<Song> actual = underTest.getSongById(1);
+        // when
+        when(songDAO.getSongById(1)).thenReturn(Optional.of(firstSong));
+        Optional<Song> actual = underTest.getSongById(1);
 
 
         // then
@@ -68,5 +71,16 @@ class SongDataAccessServiceTest {
 //    }
 
 
-
+    @Test
+    @DisplayName("Test to see if a song can be deleted")
+    void deleteSong() {
+        //given
+        Song firstSong = new Song(2, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong);
+        // when
+        when(songDAO.deleteSong(2)).thenReturn(1);
+        // then
+        int result = underTest.deleteSong(2);
+        assertThat(result).isEqualTo(1);
+        }
 }
