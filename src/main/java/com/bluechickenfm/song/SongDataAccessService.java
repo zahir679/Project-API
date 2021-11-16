@@ -36,7 +36,7 @@ import java.util.Optional;
             return jdbcTemplate.update(
                     sql,
                     song.getSong_name(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
-                    , song.getRelease_date(), song.getLanguage(), song.getPlatform()
+                    , song.getRelease_date(), song.getLanguages(), song.getPlatform()
             );
         }
 
@@ -45,14 +45,13 @@ import java.util.Optional;
             var sql = """
                     UPDATE songs
                     SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
-                    WHERE id = ? """;
-            return jdbcTemplate.update(sql,song.getSong_name(), song.getGenre(), song.getDuration(),
-                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguage(), song.getPlatform(),
-                    song.getId());
-
+                    WHERE id = ?
+                    """;
+            return jdbcTemplate.update(sql, song.getSong_name(), song.getGenre(), song.getDuration(),
+                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguages(), song.getPlatform(),
+                    song.getId()
+            );
         }
-
-
 
         @Override
         public int deleteSong(int id) {
