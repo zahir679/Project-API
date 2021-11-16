@@ -27,7 +27,7 @@ class SongDataAccessServiceTest {
     void setUp() {
         songDAO = mock(SongDAO.class);
         underTest = new SongService(songDAO);
-//        musicdb = mock(List<Song>);
+
 
     }
 
@@ -51,24 +51,42 @@ class SongDataAccessServiceTest {
 
 
 
+    @Test
+    @DisplayName("Test to see if all songs can be got from the database")
+    void canGetAllSongs() {
+        // given
+
+
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118,
+                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        Song secondSong= new Song(2, "Ideal" , "K-pop", 210, 118 ,  118,
+                LocalDate.of(2018,10,15), "Korean", "Spotify");
+        Song thirdSong = new Song(4, "Juicy" , "Rap", 180, 75, 75,
+                LocalDate.of(1994,8,9), "English", "Spotify");
+
+        List<Song> musicDb = List.of(firstSong, secondSong, thirdSong);
+
+        // when
+
+        when(songDAO.getAllSongs()).thenReturn(musicDb);
+        int actual = musicDb.size();
+        // then
+        assertThat(actual).isEqualTo(3);
+
+    }
+
+
+
 //    @Test
-//    @DisplayName("Test to see if all songs can be got from the database")
-//    void canGetAllSongs() {
-//        // given
-//
-//        List<Song> musicdb = List<>
-//
-//
-//        // when
-//
-//
-//
-//        when(songDAO.getAllSongs()).thenReturn();
-//
-//
-//        // then
-//
-//    }
+//        void canGetPeopleFromDB() {
+//            // given
+//        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+//        List<Song> songs = List.of(firstSong);
+//            // when
+//            when(songDAO.getAllSongs()).thenReturn((List<Song>) firstSong);
+//            // then
+//            assertThat(underTest.getAllSongs()).isEqualTo(firstSong);
+//        }
 
 
     @Test
