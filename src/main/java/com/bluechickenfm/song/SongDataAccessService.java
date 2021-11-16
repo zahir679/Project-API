@@ -4,11 +4,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 //public class SongDataAccessService {
 @Repository("chicken")
     public class SongDataAccessService implements SongDAO{
-    //    public abstract class SongDataAccessService implements SongDAO {
 
         private JdbcTemplate jdbcTemplate;
     //        private final JdbcTemplate jdbcTemplate;
