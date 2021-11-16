@@ -2,17 +2,18 @@ package com.bluechickenfm.song;
 
 
 import org.assertj.core.api.AbstractBigDecimalAssert;
+import org.flywaydb.core.internal.database.base.Connection;
+import org.flywaydb.core.internal.database.base.Database;
+import org.flywaydb.core.internal.database.base.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-                import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class SongDataAccessServiceTest {
 
@@ -24,6 +25,7 @@ class SongDataAccessServiceTest {
     void setUp() {
         songDAO = mock(SongDAO.class);
         underTest = new SongService(songDAO);
+//        musicdb = mock(List<Song>);
 
     }
     @Test
@@ -39,24 +41,31 @@ class SongDataAccessServiceTest {
             Optional<Song> actual = underTest.getSongById(1);
 
 
-            // then
-            assertThat(actual).isEqualTo(Optional.of(firstSong));
-        }
-
-    @Test
-    @DisplayName("Test to see if all songs can be got from the database")
-    void canGetAllSongs() {
-        // given
-
-
-
-        // when
-
-
-
         // then
-
+        assertThat(actual).isEqualTo(Optional.of(firstSong));
     }
+
+
+
+
+//    @Test
+//    @DisplayName("Test to see if all songs can be got from the database")
+//    void canGetAllSongs() {
+//        // given
+//
+//        List<Song> musicdb = List<>
+//
+//
+//        // when
+//
+//
+//
+//        when(songDAO.getAllSongs()).thenReturn();
+//
+//
+//        // then
+//
+//    }
 
 
 
