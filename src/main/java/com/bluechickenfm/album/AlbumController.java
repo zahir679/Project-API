@@ -26,7 +26,7 @@ public class AlbumController {
     @GetMapping("/albums/{id}")
     public @ResponseBody
     List<Album> getAlbumById(@PathVariable int id){
-        return AlbumService.getAlbumById(id);
+        return albumService.getAlbumById(id);
     }
 
 //    //Method to get albums by name
