@@ -1,6 +1,5 @@
 package com.bluechickenfm.song;
 
-import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.DoesSongExist;
 import com.bluechickenfm.exception.ResourceNotFound;
 
@@ -29,9 +28,9 @@ public class SongService {
         return songDAO.getAllSongs();
     }
 
-    public Song getSongById(int id) {
-        return songDAO.getSongById(id)
-                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " not found"));
+    public Optional<Song> getSongById(int id) {
+        return Optional.ofNullable(songDAO.getSongById(id)
+                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " not found")));
     }
 //        Optional<Song> songByIdOptional = Optional.ofNullable(songDAO.getSongById(id));
 //        if(songByIdOptional.isEmpty()) {
