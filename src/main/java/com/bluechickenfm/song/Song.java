@@ -27,7 +27,6 @@ public class Song {
         this.platform = platform;
     }
 
-
     public int getId() {
         return id;
     }

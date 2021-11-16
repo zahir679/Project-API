@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/v1/songs")
 public class SongController {
     private SongService songService;
 
@@ -15,13 +15,13 @@ public class SongController {
 
     //GET
     //Method to get all songs
-    @GetMapping("/songs")
+   @GetMapping
     public @ResponseBody List<Song> getAllSongs(){
         return songService.getAllSongs();
     }
 
     //Method to get a single song by its id (primary key)
-    @GetMapping("/songs/{id}")
+    @GetMapping("/{id}")
     public @ResponseBody
     List<Song> getSongById(@PathVariable int id){
         return songService.getSongById(id);
@@ -65,18 +65,19 @@ public class SongController {
 
     //POST
     //Add song
-    @PostMapping("/add")
+    @PostMapping
     public void addSong(@RequestBody Song song) {
         songService.addSong(song);
     }
 
     //PUT
     //Method to update a whole song
-    @PutMapping("/songs/{id}")
+    @PutMapping("/{id}")
     public void updateSong(@PathVariable int id,
                            @RequestBody Song song) {
         songService.updateSong(id, song);
     }
+
 
     //DELETE
     //Method to delete a song
