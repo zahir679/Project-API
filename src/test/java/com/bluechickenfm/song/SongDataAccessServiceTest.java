@@ -43,4 +43,21 @@ class SongDataAccessServiceTest {
             assertThat(actual).isEqualTo(Optional.of(firstSong));
         }
 
+    @Test
+    @DisplayName("Test to see if all songs can be got from the database")
+    void canGetAllSongs() {
+        // given
+
+
+
+        // when
+
+
+
+        // then
+
+    }
+
+
+
 }

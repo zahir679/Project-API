@@ -74,6 +74,8 @@ public class SongController {
         songService.updateSong(id, song);
     }
 
+// Spoke to nelson and these PUT methods are not needed, we could do all of the PUTS inside one method
+
 //    //Method to update a given song's name
 //    @PutMapping("/songs/{id}")
 //    public void updateSongName(@PathVariable int id, String name) {
