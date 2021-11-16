@@ -2,9 +2,11 @@ package com.bluechickenfm.album;
 
 import com.bluechickenfm.song.SongRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository("chicken")
 public class AlbumDataAccessService implements AlbumDAO {
     private JdbcTemplate jdbcTemplate;
 

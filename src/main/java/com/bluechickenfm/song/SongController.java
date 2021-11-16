@@ -23,7 +23,7 @@ public class SongController {
     //Method to get a single song by its id (primary key)
     @GetMapping("/{id}")
     public @ResponseBody
-    List<Song> getSongById(@PathVariable int id){
+    Song getSongById(@PathVariable int id){
         return songService.getSongById(id);
     }
 

@@ -2,9 +2,10 @@ package com.bluechickenfm.artist;
 
 import com.bluechickenfm.album.Album;
 import com.bluechickenfm.album.AlbumDAO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ArtistService {
 
     private ArtistDAO artistDAO;
