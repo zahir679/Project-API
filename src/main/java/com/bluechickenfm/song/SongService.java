@@ -193,12 +193,12 @@ public class SongService {
 
 
     //DELETE
-    public int deleteSong(int id) {
+    public String deleteSong(int id) {
     //returning null
 //        if(DoesSongExist.check(id)) {
 //            songDAO.deleteSong(id);
 //        }
         songDAO.deleteSong(id);
-        return 1;
+        return "Song deleted.";
     }
 }

@@ -98,7 +98,7 @@ class SongDataAccessServiceTest {
         // when
         when(songDAO.deleteSong(2)).thenReturn(1);
         // then
-        int result = underTest.deleteSong(2);
-        assertThat(result).isEqualTo(1);
+        String result = underTest.deleteSong(2);
+        assertThat(result).isEqualTo("Song deleted.");
         }
 }
