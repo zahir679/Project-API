@@ -26,12 +26,4 @@ import org.springframework.jdbc.core.JdbcTemplate;
         public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource){
             return new JdbcTemplate(hikariDataSource);
         }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JSR353Module());
-
-        return objectMapper;
-    }
     }

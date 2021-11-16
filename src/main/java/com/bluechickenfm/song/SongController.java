@@ -1,12 +1,11 @@
 package com.bluechickenfm.song;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/v1/songs")
 public class SongController {
     private SongService songService;
 
@@ -16,29 +15,28 @@ public class SongController {
 
     //GET
     //Method to get all songs
-    @GetMapping("/songs")
+   @GetMapping
     public @ResponseBody List<Song> getAllSongs(){
         return songService.getAllSongs();
     }
 
     //Method to get a single song by its id (primary key)
-    @GetMapping("/songs/{id}")
+    @GetMapping("/{id}")
     public @ResponseBody
-    List<Song> getSongById(@PathVariable int id){
+    Song getSongById(@PathVariable int id){
         return songService.getSongById(id);
     }
 
-    @GetMapping("/songs/name")
-    public @ResponseBody
-    List<Song> getSongByName(String name){
+    @GetMapping("/name/{name}")
+    public @ResponseBody Song getSongByName(@PathVariable String name){
         return songService.getSongByName(name);
     }
 
     //Method to get songs by artist_id
-//    @GetMapping("/songs/{artist_id}")
-//    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
-//        return songService.getSongsByArtist(artist_id);
-//    }
+    @GetMapping("/artist/{artist_id}")
+    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
+        return songService.getSongsByArtist(artist_id);
+    }
 
 //    //Method to get songs by album_id
 //    @GetMapping("/songs/{album_id}")
@@ -66,66 +64,24 @@ public class SongController {
 
     //POST
     //Add song
-    @PostMapping("/add")
-    public void addSong(@RequestBody Song song) {
-        songService.addSong(song);
+    @PostMapping
+    public String addSong(@RequestBody Song song) {
+        return songService.addSong(song);
     }
 
     //PUT
     //Method to update a whole song
-    @PutMapping("/songs/{id}")
-    public void updateSong(@PathVariable int id,
+    @PutMapping("update/{id}")
+    public String updateSong(@PathVariable int id,
                            @RequestBody Song song) {
-        songService.updateSong(id, song);
+        return songService.updateSong(id, song);
     }
 
-    @PatchMapping(path = "/songs/{id}", consumes = "application/json-patch+json")
-    public void updateSongByPatch(@PathVariable int id,
-                                  @RequestBody JsonPatch patch) {
-        songService.updateSongByPatch(id, patch);
-    }
-
-
-//    //Method to update a given song's name
-//    @PutMapping("/songs/{id}")
-//    public void updateSongName(@PathVariable int id, String name) {
-//        songService.updateSongName(id, name);
-//    }
-//
-//    //Method to update a given song's genre
-//    @PutMapping("/songs/{id}")
-//    public void updateSongGenre(@PathVariable int id, String genre) {
-//        songService.updateSongGenre(id, genre);
-//    }
-//
-//    //Method to update a given song's artist_id
-//    @PutMapping("/songs/{id}")
-//    public void updateSongArtistId(@PathVariable int id, int artist_id) {
-//        songService.updateSongArtistId(id, artist_id);
-//    }
-//
-//    //Method to update a given song's album_id
-//    @PutMapping("/songs/{id}")
-//    public void updateSongAlbumId(@PathVariable int id, String album_id) {
-//        songService.updateSongAlbumId(id, album_id);
-//    }
-//
-//    //Method to update a given song's release date
-//    @PutMapping("/songs/{id}")
-//    public void updateSongReleaseDate(@PathVariable int id, LocalDate release_date) {
-//        songService.updateSongReleaseDate(id, release_date);
-//    }
-//
-//    //Method to update a given song's language
-//    @PutMapping("/songs/{id}")
-//    public void updateSongLanguage(@PathVariable int id, String language) {
-//        songService.updateSongLanguage(id, language);
-//    }
 
     //DELETE
     //Method to delete a song
-    @DeleteMapping("/songs/{id}")
-    public void deleteSong(@PathVariable int id) {
-        songService.deleteSong(id);
+    @DeleteMapping("/{id}")
+    public String deleteSong(@PathVariable int id) {
+        return songService.deleteSong(id);
     }
 }

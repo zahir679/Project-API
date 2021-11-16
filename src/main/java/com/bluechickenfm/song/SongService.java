@@ -4,14 +4,8 @@ import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.DoesSongExist;
 import com.bluechickenfm.exception.ResourceNotFound;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,31 +29,25 @@ public class SongService {
         return songDAO.getAllSongs();
     }
 
-    public List<Song> getSongById(int id) {
-        Optional<List<Song>> songByIdOptional = Optional.ofNullable(songDAO.getSongById(id));
-        if(songByIdOptional.isEmpty()) {
-            //TODO: return name of song instead of id
-            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
-        }
-        return songDAO.getSongById(id);
+    public Song getSongById(int id) {
+        return songDAO.getSongById(id)
+                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " does not exist"));
     }
 
-    public List<Song> getSongByName(String name) {
-        Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
-        if(songByNameOptional.isEmpty()){
-            throw new ResourceNotFound("Sorry! " + name + " has not been found :( Please try again.");
-        }
-        return songDAO.getSongByName(name);
+    public Song getSongByName(String name) {
+        return songDAO.getSongByName(name)
+                .orElseThrow(() -> new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again."));
     }
 
-//    public List<Song> getSongsByArtist(int artist_id) {
-//        Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
-//        if(songByArtistOptional.isEmpty()) {
-//            //TODO: return name of artist instead of id
-//            throw new ResourceNotFound("Sorry! " + artist_id + " has not been found :( Please try again.");
-//        }
-//        return songDAO.getSongsByArtist(artist_id);
-//    }
+
+    public List<Song> getSongsByArtist(int artist_id) {
+        Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
+        if(songByArtistOptional.get().isEmpty()) {
+            //TODO: return name of artist instead of id
+            throw new ResourceNotFound("Sorry! The artist " + artist_id + " has not been found :( Please try again.");
+        }
+        return songDAO.getSongsByArtist(artist_id);
+    }
 //
 //    public List<Song> getSongsByAlbum(int album_id) {
 //        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
@@ -116,63 +104,26 @@ public class SongService {
 //    }
 
     //POST
-    public void addSong(Song song) {
-        //Exception for if song already exists
-        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
-        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
-            throw new Conflict("Song already exists!");
+    public String addSong(Song song) {
+        //If song name and artist for song already exist DO NOT ADD SONG
+        Optional<Song> songOptional = songDAO.getSongByName(song.getSong_name());
+        if (songOptional.isPresent() && (songOptional.get().getArtist_id() == song.getArtist_id())) {
+            throw new Conflict("Unable to add song - it already exists!");
         }
         songDAO.addSong(song);
+        return "Song added!";
     }
 
 //    //PUT
-    public void updateSong(int id, Song song) {
-        if(DoesSongExist.check(id)) {
-            songDAO.updateSong(id, song);
+    public String updateSong(int id, Song song) {
+        Optional<Song> songOptional = songDAO.getSongById(id);
+        if(songOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
         }
+        songDAO.updateSong(id, song);
+        //TODO: make sure updated song is not the same as any other song
+        return "Song updated!";
     }
-
-    public void updateSongByPatch(int id, JsonPatch patch) {
-        if(DoesSongExist.check(id)) {
-            Song song  = songDAO.getSongById(id);
-            try {
-//                Song songPatched = applyPatchToSong(patch, (Song) song);
-                Song songPatched = patch.apply(objectMapper.convertValue(song, JsonNode.class));
-                songPatched = objectMapper.treeToValue(songPatched, Song.class);
-                songDAO.updateSong(songPatched);
-            } catch (JsonPatchException e) {
-                e.printStackTrace();
-            }
-
-        }
-//        } catch (JsonPatchException | JsonProcessingException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        } catch (CustomerNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-    }
-
-//    JsonPatch instance holds the list of operations to be applied to the Target Song
-//    Target Song converted into an instance of com.fasterxml.jackson.databind.JsonNode and
-//    pass to JsonPatch.apply method to apply the patch
-//    JsonPatch.apply deals with applying the operations to the target, returns com.fasterxml.jackson.databind.JsonNode instance
-//    objectMapper.treeToValue method binds data in patched com.fasterxml.jackson.databind.JsonNode
-//    to Song type = patched Customer instance
-//    Finally, we return the patched Customer instance
-        public Song applyPatchToSong(JsonPatch patch, Song targetSong)
-                throws JsonPatchException, JsonProcessingException {
-            JsonNode patched = patch.apply(objectMapper.convertValue(targetSong, JsonNode.class));
-            return objectMapper.treeToValue(patched, Song.class);
-        }
-
-//    @RequestMapping(value = "/heavyresource/{id}", method = RequestMethod.PATCH, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> partialUpdateGeneric(
-//            @RequestBody Map<String, Object> updates,
-//            @PathVariable("id") String id) {
-//
-//        heavyResourceRepository.save(updates, id);
-//        return ResponseEntity.ok("resource updated");
-//    }
 
 //    public void updateSongName(int id, String name) {
 //        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
@@ -240,9 +191,12 @@ public class SongService {
 
 
     //DELETE
-    public void deleteSong(int id) {
-        if(DoesSongExist.check(id)) {
-            songDAO.deleteSong(id);
-        }
+    public String deleteSong(int id) {
+    //returning null
+//        if(DoesSongExist.check(id)) {
+//            songDAO.deleteSong(id);
+//        }
+        songDAO.deleteSong(id);
+        return "Song deleted.";
     }
 }
