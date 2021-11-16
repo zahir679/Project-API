@@ -29,14 +29,16 @@ public class SongService {
         return songDAO.getAllSongs();
     }
 
-    public List<Song> getSongById(int id) {
-        Optional<List<Song>> songByIdOptional = Optional.ofNullable(songDAO.getSongById(id));
-        if(songByIdOptional.isEmpty()) {
-            //TODO: return name of song instead of id
-            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
-        }
-        return songDAO.getSongById(id);
+    public Song getSongById(int id) {
+        return songDAO.getSongById(id)
+                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " not found"));
     }
+//        Optional<Song> songByIdOptional = Optional.ofNullable(songDAO.getSongById(id));
+//        if(songByIdOptional.isEmpty()) {
+//            //TODO: return name of song instead of id
+//            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
+//        }
+//        return songDAO.getSongById(id);
 
     public List<Song> getSongByName(String name) {
         Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
@@ -112,10 +114,10 @@ public class SongService {
     //POST
     public void addSong(Song song) {
         //Exception for if song already exists
-        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
-        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
-            throw new Conflict("Song already exists!");
-        }
+//        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
+//        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
+//            throw new Conflict("Song already exists!");
+//        }
         songDAO.addSong(song);
     }
 
@@ -193,8 +195,10 @@ public class SongService {
 
     //DELETE
     public void deleteSong(int id) {
-        if(DoesSongExist.check(id)) {
-            songDAO.deleteSong(id);
-        }
+    //returning null
+//        if(DoesSongExist.check(id)) {
+//            songDAO.deleteSong(id);
+//        }
+        songDAO.deleteSong(id);
     }
 }

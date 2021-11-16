@@ -1,11 +1,12 @@
 package com.bluechickenfm.song;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SongDAO {
 
     List<Song> getAllSongs();
-    List<Song> getSongById(int id);
+    Optional<Song> getSongById(int id);
 //    List<Song> getSongsByArtist(int artist_id);
 //    List<Song> getSongsByAlbum(int release_year);
 //    List<Song> getSongsByGenre(String genre);

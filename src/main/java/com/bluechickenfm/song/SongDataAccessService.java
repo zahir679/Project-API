@@ -65,21 +65,23 @@ import java.util.Optional;
         }
 
         @Override
-        public List<Song> getSongById(int id) {
+        public Optional<Song> getSongById(int id) {
             var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
                 WHERE id = ?
                  """;
-            return jdbcTemplate.query(sql, new SongRowMapper(), id);
+            return jdbcTemplate.query(sql, new SongRowMapper(), id)
+                    .stream()
+                    .findFirst();
         }
 
         @Override
         public List<Song> getSongByName(String name) {
             var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform,
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
-                WHERE name = ?
+                WHERE song_name = ?
                  """;
             return jdbcTemplate.query(sql, new SongRowMapper(), name);
         }
