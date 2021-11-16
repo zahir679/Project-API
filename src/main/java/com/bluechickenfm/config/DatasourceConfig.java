@@ -1,5 +1,6 @@
 package com.bluechickenfm.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -25,4 +26,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
         public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource){
             return new JdbcTemplate(hikariDataSource);
         }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JSR353Module());
+
+        return objectMapper;
+    }
     }

@@ -6,6 +6,7 @@ import com.bluechickenfm.exception.ResourceNotFound;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,21 +133,18 @@ public class SongService {
     }
 
     public void updateSongByPatch(int id, JsonPatch patch) {
-            if(DoesSongExist.check(id)) {
-                Song song  = songDAO.getSongById(id);
-                try {
-                    Song songPatched = applyPatchToSong(patch, (Song) song);
-                    songDAO.updateSong(songPatched);
-                } catch (JsonPatchException e) {
-                    e.printStackTrace();
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-
+        if(DoesSongExist.check(id)) {
+            Song song  = songDAO.getSongById(id);
+            try {
+//                Song songPatched = applyPatchToSong(patch, (Song) song);
+                Song songPatched = patch.apply(objectMapper.convertValue(song, JsonNode.class));
+                songPatched = objectMapper.treeToValue(songPatched, Song.class);
+                songDAO.updateSong(songPatched);
+            } catch (JsonPatchException e) {
+                e.printStackTrace();
             }
 
-            songService.updateCustomer(customerPatched);
-            return ResponseEntity.ok(customerPatched);
+        }
 //        } catch (JsonPatchException | JsonProcessingException e) {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //        } catch (CustomerNotFoundException e) {
@@ -154,6 +152,13 @@ public class SongService {
 //        }
     }
 
+//    JsonPatch instance holds the list of operations to be applied to the Target Song
+//    Target Song converted into an instance of com.fasterxml.jackson.databind.JsonNode and
+//    pass to JsonPatch.apply method to apply the patch
+//    JsonPatch.apply deals with applying the operations to the target, returns com.fasterxml.jackson.databind.JsonNode instance
+//    objectMapper.treeToValue method binds data in patched com.fasterxml.jackson.databind.JsonNode
+//    to Song type = patched Customer instance
+//    Finally, we return the patched Customer instance
         public Song applyPatchToSong(JsonPatch patch, Song targetSong)
                 throws JsonPatchException, JsonProcessingException {
             JsonNode patched = patch.apply(objectMapper.convertValue(targetSong, JsonNode.class));
