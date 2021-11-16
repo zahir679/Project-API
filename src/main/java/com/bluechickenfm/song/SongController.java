@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/v1/songs")
 public class SongController {
     private SongService songService;
 
@@ -15,24 +15,25 @@ public class SongController {
 
     //GET
     //Method to get all songs
-    @GetMapping("/songs")
-    public List<Song> getAllSongs(){
+   @GetMapping
+    public @ResponseBody List<Song> getAllSongs(){
         return songService.getAllSongs();
     }
 
     //Method to get a single song by its id (primary key)
-    @GetMapping("/songs/id/{id}")
-    public Song getSongById(@PathVariable int id){
+    @GetMapping("/{id}")
+    public @ResponseBody
+    List<Song> getSongById(@PathVariable int id){
         return songService.getSongById(id);
     }
 
-    @GetMapping("/songs/name/{name}")
+    @GetMapping("/name/{name}")
     public List<Song> getSongByName(@PathVariable String name){
         return songService.getSongByName(name);
     }
 
     //Method to get songs by artist_id
-//    @GetMapping("/songs/artist/{artist_id}")
+//    @GetMapping("/songs/{artist_id}")
 //    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
 //        return songService.getSongsByArtist(artist_id);
 //    }
@@ -63,18 +64,19 @@ public class SongController {
 
     //POST
     //Add song
-    @PostMapping("/add")
+    @PostMapping
     public void addSong(@RequestBody Song song) {
         songService.addSong(song);
     }
 
     //PUT
     //Method to update a whole song
-    @PutMapping("/songs/{id}")
+    @PutMapping("/{id}")
     public void updateSong(@PathVariable int id,
                            @RequestBody Song song) {
         songService.updateSong(id, song);
     }
+
 
     //DELETE
     //Method to delete a song

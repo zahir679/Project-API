@@ -9,7 +9,6 @@ import java.util.Optional;
 //public class SongDataAccessService {
 @Repository("chicken")
     public class SongDataAccessService implements SongDAO{
-    //    public abstract class SongDataAccessService implements SongDAO {
 
         private JdbcTemplate jdbcTemplate;
     //        private final JdbcTemplate jdbcTemplate;
@@ -37,7 +36,7 @@ import java.util.Optional;
             return jdbcTemplate.update(
                     sql,
                     song.getSong_name(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
-                    , song.getRelease_date(), song.getLanguage(), song.getPlatform()
+                    , song.getRelease_date(), song.getLanguages(), song.getPlatform()
             );
         }
 
@@ -48,7 +47,7 @@ import java.util.Optional;
                     SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
                     WHERE id = ? """;
             return jdbcTemplate.update(sql,song.getSong_name(), song.getGenre(), song.getDuration(),
-                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguage(), song.getPlatform(),
+                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguages(), song.getPlatform(),
                     song.getId());
 
         }
@@ -85,5 +84,5 @@ import java.util.Optional;
                  """;
             return jdbcTemplate.query(sql, new SongRowMapper(), name);
         }
-    }
 
+    }
