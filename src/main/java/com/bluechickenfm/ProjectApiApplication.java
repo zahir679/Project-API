@@ -1,5 +1,6 @@
 package com.bluechickenfm;
 
+import com.bluechickenfm.song.SongController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -3,22 +3,22 @@ package com.bluechickenfm.artist;
 import java.util.Objects;
 
 public class Artist {
-    private String name;
+    private String artist_name;
     private String nationality;
-    private String biggestHit;
+    private String biggest_hit;
 
     public Artist(String name, String nationality, String biggestHit) {
-        this.name = name;
+        this.artist_name = name;
         this.nationality = nationality;
-        this.biggestHit = biggestHit;
+        this.biggest_hit = biggestHit;
     }
 
-    public String getName() {
-        return name;
+    public String getArtist_name() {
+        return artist_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setArtist_name(String artist_name) {
+        this.artist_name = artist_name;
     }
 
     public String getNationality() {
@@ -29,20 +29,20 @@ public class Artist {
         this.nationality = nationality;
     }
 
-    public String getBiggestHit() {
-        return biggestHit;
+    public String getBiggest_hit() {
+        return biggest_hit;
     }
 
-    public void setBiggestHit(String biggestHit) {
-        this.biggestHit = biggestHit;
+    public void setBiggest_hit(String biggest_hit) {
+        this.biggest_hit = biggest_hit;
     }
 
     @Override
     public String toString() {
         return "Artist{" +
-                "name='" + name + '\'' +
+                "name='" + artist_name + '\'' +
                 ", nationality='" + nationality + '\'' +
-                ", biggestHit='" + biggestHit + '\'' +
+                ", biggestHit='" + biggest_hit + '\'' +
                 '}';
     }
 
@@ -51,11 +51,11 @@ public class Artist {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return Objects.equals(name, artist.name) && Objects.equals(nationality, artist.nationality) && Objects.equals(biggestHit, artist.biggestHit);
+        return Objects.equals(artist_name, artist.artist_name) && Objects.equals(nationality, artist.nationality) && Objects.equals(biggest_hit, artist.biggest_hit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, nationality, biggestHit);
+        return Objects.hash(artist_name, nationality, biggest_hit);
     }
 }
