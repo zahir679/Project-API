@@ -12,6 +12,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public List<Album> getAlbumById(int id){
         var sql = """
                 SELECT * FROM albums
@@ -20,6 +21,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         return jdbcTemplate.query(sql, new AlbumRowMapper(), id);
     };
 
+    @Override
     public List<Album> getAllAlbums(){
         var sql = """
                 SELECT * FROM albums
@@ -28,6 +30,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         return jdbcTemplate.query(sql, new AlbumRowMapper());
     };
 
+    @Override
     public int addAlbum(Album album){
         var sql = """
                 INSERT INTO albums(album_name, artist_id, genre, release_date, number_of_tracks)
@@ -38,6 +41,8 @@ public class AlbumDataAccessService implements AlbumDAO {
                 album.getAlbum_name(), album.getArtist_id(), album.getGenre(), album.getRelease_date(), album.getNumber_of_tracks()
         );
     };
+
+    @Override
     public int updateAlbum(int id, Album album){
         var sql = """
                     UPDATE albums
@@ -48,6 +53,7 @@ public class AlbumDataAccessService implements AlbumDAO {
 
     };
 
+    @Override
     public int deleteAlbum(int id){
         var sql = """
                 DELETE FROM albums

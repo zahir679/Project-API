@@ -12,7 +12,7 @@ public class AlbumRowMapper implements RowMapper<Album> {
         return new Album(
                 resultSet.getInt("id"),
                 resultSet.getString("album_name"),
-                resultSet.getString("artist_id"),
+                resultSet.getInt("artist_id"),
                 LocalDate.parse(resultSet.getString("release_date"))
         );
     }

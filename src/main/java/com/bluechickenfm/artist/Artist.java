@@ -3,11 +3,12 @@ package com.bluechickenfm.artist;
 import java.util.Objects;
 
 public class Artist {
+    private int id;
     private String artist_name;
     private String nationality;
     private String biggest_hit;
 
-    public Artist(String name, String nationality, String biggestHit) {
+    public Artist(int id, String name, String nationality, String biggestHit) {
         this.artist_name = name;
         this.nationality = nationality;
         this.biggest_hit = biggestHit;

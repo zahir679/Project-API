@@ -20,7 +20,7 @@ public class Album {
         this.release_date = release_date;
     }
 
-    public Album(int id, String album_name, String artist_id, LocalDate release_date) {
+    public Album(int id, String album_name, int artist_id, LocalDate release_date) {
     }
 
     public String getAlbum_name() {
