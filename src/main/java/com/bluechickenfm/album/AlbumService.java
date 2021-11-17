@@ -11,7 +11,7 @@ public class AlbumService {
 
     private AlbumDAO albumDAO;
     @Autowired
-    public AlbumService(@Qualifier("chicken") AlbumDAO albumDAO) {
+    public AlbumService(@Qualifier("chickenAlbum") AlbumDAO albumDAO) {
         this.albumDAO = albumDAO;
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 //public class SongDataAccessService {
-@Repository("chicken")
+@Repository("chickenSong")
     public class SongDataAccessService implements SongDAO{
 
         private JdbcTemplate jdbcTemplate;

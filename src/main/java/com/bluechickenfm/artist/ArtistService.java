@@ -2,6 +2,8 @@ package com.bluechickenfm.artist;
 
 import com.bluechickenfm.album.Album;
 import com.bluechickenfm.album.AlbumDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,10 @@ import java.util.List;
 public class ArtistService {
 
     private ArtistDAO artistDAO;
+    @Autowired
+    public ArtistService(@Qualifier("chickenArtist") ArtistDAO artistDAO) {
+        this.artistDAO = artistDAO;
+    }
 
     public List<Artist> getArtistById(int id) {
         return this.artistDAO.getArtistById(id);

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("chicken")
+@Repository("chickenAlbum")
 public class AlbumDataAccessService implements AlbumDAO {
     private JdbcTemplate jdbcTemplate;
 

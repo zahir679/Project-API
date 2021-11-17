@@ -8,9 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("chicken")
+@Repository("chickenArtist")
 public class ArtistDataAccessService implements ArtistDAO{
     private JdbcTemplate jdbcTemplate;
+
+    public ArtistDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public List<Artist> getArtistById(int id){
         var sql = """

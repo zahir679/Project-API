@@ -16,7 +16,7 @@ public class SongService {
     private SongDAO songDAO;
 
     @Autowired
-    public SongService(@Qualifier("chicken") SongDAO songDAO) {
+    public SongService(@Qualifier("chickenSong") SongDAO songDAO) {
         this.songDAO = songDAO;
     }
 
