@@ -46,7 +46,7 @@ public class ArtistService {
     public List<Artist> getArtistByName(String name) {
         Optional<List<Artist>> artistByNameOptional = Optional.ofNullable(artistDAO.getArtistByName(name));
         if(artistByNameOptional.get().isEmpty()) {
-            throw new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again.");
+            throw new ResourceNotFound("Sorry! The artist " + name + " has not been found :( Please try again.");
         }
         return artistDAO.getArtistByName(name);
     }
