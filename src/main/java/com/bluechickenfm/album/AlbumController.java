@@ -16,14 +16,14 @@ public class AlbumController {
 
     //GET
     //Method to get all albums
-    @GetMapping("/albums")
+    @GetMapping
     public @ResponseBody
     List<Album> getAllAlbums(){
         return albumService.getAllAlbums();
     }
 
     //Method to get a single album by its id (primary key)
-    @GetMapping("/albums/{id}")
+    @GetMapping("/{id}")
     public @ResponseBody
     List<Album> getAlbumById(@PathVariable int id){
         return albumService.getAlbumById(id);
@@ -58,14 +58,14 @@ public class AlbumController {
 
     //POST
     //Add song
-    @PostMapping("/albums/add")
+    @PostMapping("/add")
     public void addAlbum(@RequestBody Album album) {
         albumService.addAlbum(album);
     }
 
     //PUT
     //Method to update a whole album
-    @PutMapping("/albums/{id}")
+    @PutMapping("/{id}")
     public void updateAlbum(@PathVariable int id,
                            @RequestBody Album album) {
         albumService.updateAlbum(id, album);
@@ -73,7 +73,7 @@ public class AlbumController {
 
     //DELETE
     //Method to delete an album
-    @DeleteMapping("/albums/{id}")
+    @DeleteMapping("/{id}")
     public void deleteAlbum(@PathVariable int id) {
         albumService.deleteAlbum(id);
     }

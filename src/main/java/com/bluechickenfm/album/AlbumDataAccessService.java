@@ -2,9 +2,12 @@ package com.bluechickenfm.album;
 
 import com.bluechickenfm.song.SongRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+@Repository("chickenAlbum")
 public class AlbumDataAccessService implements AlbumDAO {
     private JdbcTemplate jdbcTemplate;
 
@@ -23,7 +26,6 @@ public class AlbumDataAccessService implements AlbumDAO {
     public List<Album> getAllAlbums(){
         var sql = """
                 SELECT * FROM albums
-                LIMIT 100;
                  """;
         return jdbcTemplate.query(sql, new AlbumRowMapper());
     };
@@ -44,7 +46,7 @@ public class AlbumDataAccessService implements AlbumDAO {
                     SET album_name=?, artist_id=?, genre=?, release_date=?, number_of_tracks=?
                     WHERE id = ? """;
         return jdbcTemplate.update(sql,album.getAlbum_name(), album.getArtist_id(), album.getGenre(),
-                album.getRelease_date(), album.getNumber_of_tracks());
+                album.getRelease_date(), album.getNumber_of_tracks(), album.getId());
 
     };
 

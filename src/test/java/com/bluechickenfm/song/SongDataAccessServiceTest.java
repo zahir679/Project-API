@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 
+import java.nio.file.OpenOption;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -33,7 +34,7 @@ class SongDataAccessServiceTest {
 
     @Test
     @DisplayName("Test to see if songs can be got by id")
-    void canGetSongsById() {
+    void getSongsById() {
         // given
 
         Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
@@ -53,7 +54,7 @@ class SongDataAccessServiceTest {
 
     @Test
     @DisplayName("Test to see if all songs can be got from the database")
-    void canGetAllSongs() {
+    void getAllSongs() {
         // given
 
 
