@@ -9,9 +9,22 @@ public class Artist {
     private String biggest_hit;
 
     public Artist(int id, String name, String nationality, String biggestHit) {
+        this.id = id;
         this.artist_name = name;
         this.nationality = nationality;
         this.biggest_hit = biggestHit;
+    }
+
+    public Artist(){
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getArtist_name() {

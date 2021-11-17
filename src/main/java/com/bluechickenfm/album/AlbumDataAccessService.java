@@ -26,8 +26,7 @@ public class AlbumDataAccessService implements AlbumDAO {
     @Override
     public List<Album> getAllAlbums(){
         var sql = """
-                SELECT * FROM albums
-                LIMIT 100;
+                SELECT * FROM albums;
                  """;
         return jdbcTemplate.query(sql, new AlbumRowMapper());
     };

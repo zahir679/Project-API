@@ -26,8 +26,7 @@ public class ArtistDataAccessService implements ArtistDAO{
     @Override
     public List<Artist> getAllArtists(){
         var sql = """
-                SELECT * FROM artists
-                LIMIT 100;
+                SELECT * FROM artists;
                  """;
         return jdbcTemplate.query(sql, new ArtistRowMapper());
 
@@ -51,7 +50,7 @@ public class ArtistDataAccessService implements ArtistDAO{
                     UPDATE artists
                     SET artist_name=?, nationality=?, biggest_hit=?
                     WHERE id = ? """;
-        return jdbcTemplate.update(sql,artist.getArtist_name(), artist.getNationality(), artist.getBiggest_hit()
+        return jdbcTemplate.update(sql,artist.getArtist_name(), artist.getNationality(), artist.getBiggest_hit(), artist.getId()
         );
     };
     @Override
