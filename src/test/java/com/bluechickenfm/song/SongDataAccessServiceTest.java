@@ -22,6 +22,20 @@ class SongDataAccessServiceTest {
         songDAO = mock(SongDAO.class);
         underTest = new SongService(songDAO);
 
+    }
+
+
+    @Test
+    @DisplayName("Test to see if song is added")
+    void addSong(){
+        //given
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+
+        //when
+        String actual = underTest.addSong(firstSong);
+
+        //then
+        assertThat(actual).isEqualTo("Song added");
 
     }
 

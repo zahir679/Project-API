@@ -46,7 +46,7 @@ public class ArtistDataAccessServiceTest {
 
 
     @Test
-    @DisplayName("Test to see if all songs can be got from the database")
+    @DisplayName("Test to see if all artists can be got from the database")
     void canGetAllArtists() {
         // given
 
