@@ -32,6 +32,15 @@ public class ArtistDataAccessService implements ArtistDAO{
 
     };
 
+    public List<Artist> getArtistByName(String name){
+        var sql = """
+                SELECT *
+                FROM artists
+                WHERE artist_name LIKE ?
+                 """;
+        return jdbcTemplate.query(sql, new ArtistRowMapper(), name+'%');
+    }
+
     @Override
     public int addArtist(Artist artist){
         var sql = """
@@ -44,6 +53,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         );
 
     };
+
     @Override
     public int updateArtist(int id, Artist artist){
         var sql = """

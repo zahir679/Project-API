@@ -32,30 +32,35 @@ public class AlbumController {
         return albumService.getAlbumById(id);
     }
 
-//    //Method to get albums by name
-//    @GetMapping("/name")
-//    public @ResponseBody
-//    List<Album> getAlbumByName(String name){
-//        return albumService.getAlbumByName(name);
-//    }
+    //Method to get albums by name
+    @GetMapping("/name/{name}")
+    public @ResponseBody List<Album> getAlbumByName(@PathVariable String name){
+        return albumService.getAlbumByName(name);
+    }
 
-//        //Method to get albums by artist_id
-//    @GetMapping("/artist/{artist_id}")
-//    public @ResponseBody List<Album> getAlbumsByArtist(@PathVariable int artist_id){
-//        return albumService.getAlbumsByArtist(artist_id);
-//    }
+    //Method to get albums by artist_id
+    @GetMapping("/artist/{artist_id}")
+    public @ResponseBody List<Album> getAlbumsByArtist(@PathVariable int artist_id){
+        return albumService.getAlbumsByArtist(artist_id);
+    }
 
-//        //Method to get albums by genre
-//    @GetMapping("/{genre}")
-//    public @ResponseBody List<Song> getAlbumsByGenre(@PathVariable String genre){
-//        return albumService.getAlbumsByGenre(genre);
-//    }
+    //Method to get albums by genre
+    @GetMapping("/genre/{genre}")
+    public @ResponseBody List<Album> getAlbumsByGenre(@PathVariable String genre){
+        return albumService.getAlbumsByGenre(genre);
+    }
 
-//        //Method to get albums by year
-//    @GetMapping("/albums/{release_year}")
-//    public @ResponseBody List<Album> getAlbumsByYear(@PathVariable int release_year){
-//        return albumService.getAlbumsByYear(release_year);
-//    }
+    //Method to get albums by year
+    @GetMapping("/year/{release_year}")
+    public @ResponseBody List<Album> getAlbumsByYear(@PathVariable int release_year){
+        return albumService.getAlbumsByYear(release_year);
+    }
+
+    //Method to get albums by decade
+    @GetMapping("/decade/{release_decade}")
+    public @ResponseBody List<Album> getAlbumsByDecade(@PathVariable int release_decade){
+        return albumService.getAlbumsByDecade(release_decade);
+    }
 
     //TODO Create a get album by decade function
 

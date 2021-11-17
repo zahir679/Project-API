@@ -113,16 +113,14 @@ public class SongService {
 
 //    //PUT
 public String updateSong(int id, Song song) {
-//    Optional<Song> songOptional = songDAO.getSongById(id);
-//    if(songOptional.isEmpty()) {
-//        throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
-//    }
-
-
-    if(songDAO.updateSong(id, song) == 1) {
-        return "Song updated!";
+    Optional<Song> songOptional = songDAO.getSongById(id);
+    if(songOptional.isEmpty()) {
+        throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
     }
-    return "Song not updated...";
+    if(songDAO.updateSong(id, song) == 0) {
+        return "Song not updated...";
+    }
+    return "Song updated!";
     //TODO: make sure updated song is not the same as any other song
 }
 
