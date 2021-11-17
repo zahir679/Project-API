@@ -8,19 +8,17 @@ import java.util.Objects;
 public class Album {
     private int id;
     private String album_name;
-    private String artist_id;
+    private int artist_id;
     private String genre;
     private LocalDate release_date;
     private int number_of_tracks;
 
-    public Album(String album_name, String artistId, String genre, LocalDate release_date, int number_of_tracks) {
+    public Album( int id, String album_name, int artist_id, String genre, LocalDate release_date, int number_of_tracks) {
         this.album_name = album_name;
-        this.artist_id = artistId;
+        this.artist_id = artist_id;
         this.genre = genre;
         this.release_date = release_date;
-    }
-
-    public Album(int id, String album_name, int artist_id, LocalDate release_date) {
+        this.number_of_tracks = number_of_tracks;
     }
 
     public String getAlbum_name() {
@@ -31,11 +29,11 @@ public class Album {
         this.album_name = album_name;
     }
 
-    public String getArtist_id() {
+    public int getArtist_id() {
         return artist_id;
     }
 
-    public void setArtist_id(String artist_id) {
+    public void setArtist_id(int artist_id) {
         this.artist_id = artist_id;
     }
 

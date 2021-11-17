@@ -13,7 +13,9 @@ public class AlbumRowMapper implements RowMapper<Album> {
                 resultSet.getInt("id"),
                 resultSet.getString("album_name"),
                 resultSet.getInt("artist_id"),
-                LocalDate.parse(resultSet.getString("release_date"))
+                resultSet.getString("genre"),
+                LocalDate.parse(resultSet.getString("release_date")),
+                resultSet.getInt("number_of_tracks")
         );
     }
 }

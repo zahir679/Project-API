@@ -15,7 +15,7 @@ public class ArtistDataAccessService implements ArtistDAO{
     public ArtistDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
+    @Override
     public List<Artist> getArtistById(int id){
         var sql = """
                 SELECT * FROM artists
@@ -23,6 +23,7 @@ public class ArtistDataAccessService implements ArtistDAO{
                  """;
         return jdbcTemplate.query(sql, new ArtistRowMapper(), id);
     };
+    @Override
     public List<Artist> getAllArtists(){
         var sql = """
                 SELECT * FROM artists
@@ -31,10 +32,12 @@ public class ArtistDataAccessService implements ArtistDAO{
         return jdbcTemplate.query(sql, new ArtistRowMapper());
 
     };
+
+    @Override
     public int addArtist(Artist artist){
         var sql = """
                 INSERT INTO artists(artist_name, nationality, biggest_hit)
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?);
                  """;
         return jdbcTemplate.update(
                 sql,
@@ -42,6 +45,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         );
 
     };
+    @Override
     public int updateArtist(int id, Artist artist){
         var sql = """
                     UPDATE artists
@@ -50,6 +54,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         return jdbcTemplate.update(sql,artist.getArtist_name(), artist.getNationality(), artist.getBiggest_hit()
         );
     };
+    @Override
     public int deleteArtist(int id){
         var sql = """
                 DELETE FROM artist
