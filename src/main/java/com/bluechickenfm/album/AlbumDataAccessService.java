@@ -50,7 +50,7 @@ public class AlbumDataAccessService implements AlbumDAO {
                     SET album_name=?, artist_id=?, genre=?, release_date=?, number_of_tracks=?
                     WHERE id = ? """;
         return jdbcTemplate.update(sql,album.getAlbum_name(), album.getArtist_id(), album.getGenre(),
-                album.getRelease_date(), album.getNumber_of_tracks());
+                album.getRelease_date(), album.getNumber_of_tracks(), album.getId());
 
     };
 

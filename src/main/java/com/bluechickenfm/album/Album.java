@@ -14,11 +14,20 @@ public class Album {
     private int number_of_tracks;
 
     public Album( int id, String album_name, int artist_id, String genre, LocalDate release_date, int number_of_tracks) {
+        this.id = id;
         this.album_name = album_name;
         this.artist_id = artist_id;
         this.genre = genre;
         this.release_date = release_date;
         this.number_of_tracks = number_of_tracks;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAlbum_name() {

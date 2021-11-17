@@ -64,7 +64,7 @@ public class SongController {
 
     //POST
     //Add song
-    @PostMapping
+    @PostMapping("/add")
     public String addSong(@RequestBody Song song) {
         return songService.addSong(song);
     }
