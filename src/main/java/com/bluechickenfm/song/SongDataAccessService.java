@@ -1,8 +1,10 @@
 package com.bluechickenfm.song;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,78 @@ import java.util.Optional;
             return jdbcTemplate.query(sql, new SongRowMapper());
         }
 
-        @Override
+    @Override
+    public Optional<Song> getSongById(int id) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE id = ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), id)
+                .stream()
+                .findFirst();
+    }
+
+    @Override
+    public List<Song> getSongByName(String name) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE song_name LIKE ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), name+'%');
+    }
+
+    //    @Override
+    public List<Song> getSongsByArtist(int artist_id) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE artist_id = ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), artist_id);
+    }
+
+    public List<Song> getSongsByAlbum(int album_id) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE album_id = ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), album_id);
+    }
+
+    public List<Song> getSongsByGenre(String genre) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE genre = ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), genre);
+    }
+
+    public List<Song> getSongsByYear(LocalDate start_date, LocalDate end_date) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE release_date >= ? AND release_date <= ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), start_date, end_date);
+    }
+
+    public List<Song> getSongsByDecade(LocalDate start_date, LocalDate end_date) {
+
+            //TODO: variables for decade range
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE release_date >= ? AND release_date <= ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), start_date, end_date);
+    }
+
+
+    @Override
         public int addSong(Song song) {
             var sql = """
                 INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform)
@@ -61,49 +134,5 @@ import java.util.Optional;
                 """;
             return jdbcTemplate.update(sql, id);
         }
-
-        @Override
-        public Optional<Song> getSongById(int id) {
-            var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
-                FROM songs
-                WHERE id = ?
-                 """;
-            return jdbcTemplate.query(sql, new SongRowMapper(), id)
-                    .stream()
-                    .findFirst();
-        }
-
-        @Override
-        public Optional<Song> getSongByName(String name) {
-            var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
-                FROM songs
-                WHERE song_name = ?
-                 """;
-            return jdbcTemplate.query(sql, new SongRowMapper(), name)
-                    .stream()
-                    .findFirst();
-        }
-
-//    @Override
-    public List<Song> getSongsByArtist(int artist_id) {
-        var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
-                FROM songs
-                WHERE artist_id = ?
-                 """;
-        return jdbcTemplate.query(sql, new SongRowMapper(), artist_id);
-    }
-
-    public List<Song> getSongsByAlbum(int album_id) {
-        var sql = """
-                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
-                FROM songs
-                WHERE album_id = ?
-                 """;
-        return jdbcTemplate.query(sql, new SongRowMapper(), album_id);
-    }
-
 
 }
