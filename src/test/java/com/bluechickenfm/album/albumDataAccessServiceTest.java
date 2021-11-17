@@ -245,6 +245,21 @@ public class albumDataAccessServiceTest {
     }
 
 
+//    @Test
+//    @DisplayName("Testing joint queries getting album by Decade method")
+//    void getAlbumByGenreAndDecade(){
+//        // given
+//        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+//                LocalDate.of(2016,4,29), 20);
+//        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+//                LocalDate.of(1976,10,11), 10);
+//        List<Album> albums = List.of(firstAlbum, secondAlbum);
+//        //when
+//        when(albumDAO.getAlbumsByGenreAndDecade(LocalDate.of(1970,1,1), LocalDate.of(1979,12,31))).thenReturn(List.of(secondAlbum));
+//        List<Album> actual = underTest.getAlbumsByDecade(1970);
+//        assertThat(actual).isEqualTo(List.of(secondAlbum));
+//
+//    }
 
 
 
