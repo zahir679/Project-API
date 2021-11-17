@@ -31,31 +31,23 @@ public class SongService {
 
     public Song getSongById(int id) {
         return songDAO.getSongById(id)
-                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " does not exist"));
     }
-//        Optional<Song> songByIdOptional = Optional.ofNullable(songDAO.getSongById(id));
-//        if(songByIdOptional.isEmpty()) {
-//            //TODO: return name of song instead of id
-//            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
-//        }
-//        return songDAO.getSongById(id);
 
-    public List<Song> getSongByName(String name) {
-        Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
-        if(songByNameOptional.isEmpty()){
-            throw new ResourceNotFound("Sorry! " + name + " has not been found :( Please try again.");
+    public Song getSongByName(String name) {
+        return songDAO.getSongByName(name)
+                .orElseThrow(() -> new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again."));
+    }
+
+
+    public List<Song> getSongsByArtist(int artist_id) {
+        Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
+        if(songByArtistOptional.get().isEmpty()) {
+            //TODO: return name of artist instead of id
+            throw new ResourceNotFound("Sorry! The artist " + artist_id + " has not been found :( Please try again.");
         }
-        return songDAO.getSongByName(name);
+        return songDAO.getSongsByArtist(artist_id);
     }
-
-//    public List<Song> getSongsByArtist(int artist_id) {
-//        Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
-//        if(songByArtistOptional.isEmpty()) {
-//            //TODO: return name of artist instead of id
-//            throw new ResourceNotFound("Sorry! " + artist_id + " has not been found :( Please try again.");
-//        }
-//        return songDAO.getSongsByArtist(artist_id);
-//    }
 //
 //    public List<Song> getSongsByAlbum(int album_id) {
 //        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
@@ -112,13 +104,14 @@ public class SongService {
 //    }
 
     //POST
-    public void addSong(Song song) {
-        //Exception for if song already exists
-//        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
-//        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
-//            throw new Conflict("Song already exists!");
-//        }
+    public String addSong(Song song) {
+        //If song name and artist for song already exist DO NOT ADD SONG
+        Optional<Song> songOptional = songDAO.getSongByName(song.getSong_name());
+        if (songOptional.isPresent() && (songOptional.get().getArtist_id() == song.getArtist_id())) {
+            throw new Conflict("Unable to add song - it already exists!");
+        }
         songDAO.addSong(song);
+        return "Song added!";
     }
 
 //    //PUT
@@ -200,11 +193,12 @@ public String updateSong(int id, Song song) {
 
 
     //DELETE
-    public void deleteSong(int id) {
+    public String deleteSong(int id) {
     //returning null
 //        if(DoesSongExist.check(id)) {
 //            songDAO.deleteSong(id);
 //        }
         songDAO.deleteSong(id);
+        return "Song deleted.";
     }
 }

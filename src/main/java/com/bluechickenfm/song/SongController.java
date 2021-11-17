@@ -28,15 +28,15 @@ public class SongController {
     }
 
     @GetMapping("/name/{name}")
-    public List<Song> getSongByName(@PathVariable String name){
+    public @ResponseBody Song getSongByName(@PathVariable String name){
         return songService.getSongByName(name);
     }
 
     //Method to get songs by artist_id
-//    @GetMapping("/songs/{artist_id}")
-//    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
-//        return songService.getSongsByArtist(artist_id);
-//    }
+    @GetMapping("/artist/{artist_id}")
+    public @ResponseBody List<Song> getSongsByArtist(@PathVariable int artist_id){
+        return songService.getSongsByArtist(artist_id);
+    }
 
 //    //Method to get songs by album_id
 //    @GetMapping("/songs/{album_id}")
@@ -65,23 +65,23 @@ public class SongController {
     //POST
     //Add song
     @PostMapping
-    public void addSong(@RequestBody Song song) {
-        songService.addSong(song);
+    public String addSong(@RequestBody Song song) {
+        return songService.addSong(song);
     }
 
     //PUT
     //Method to update a whole song
-    @PutMapping("/{id}")
-    public void updateSong(@PathVariable int id,
+    @PutMapping("update/{id}")
+    public String updateSong(@PathVariable int id,
                            @RequestBody Song song) {
-        songService.updateSong(id, song);
+        return songService.updateSong(id, song);
     }
 
 
     //DELETE
     //Method to delete a song
-    @DeleteMapping("/songs/{id}")
-    public void deleteSong(@PathVariable int id) {
-        songService.deleteSong(id);
+    @DeleteMapping("/{id}")
+    public String deleteSong(@PathVariable int id) {
+        return songService.deleteSong(id);
     }
 }
