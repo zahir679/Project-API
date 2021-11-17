@@ -67,7 +67,12 @@ public class AlbumController {
         return albumService.getAlbumsByDecade(release_decade);
     }
 
-    //TODO Create a get album by decade function
+    //Method to get albums by decade
+    @GetMapping("/genre_decade/{genre}/{release_decade}")
+    public @ResponseBody List<Album> getAlbumsByGenreAndDecade(@PathVariable String genre,
+                                                               @PathVariable int release_decade){
+        return albumService.getAlbumsByGenreAndDecade(genre, release_decade);
+    }
 
     //POST
     //Add song

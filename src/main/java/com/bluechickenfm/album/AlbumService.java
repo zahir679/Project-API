@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlbumService {
@@ -82,7 +84,7 @@ public class AlbumService {
         LocalDate end_date = LocalDate.parse(release_year + "-12-31");
 
         Optional<List<Album>> albumByYearOptional = Optional.ofNullable(albumDAO.getAlbumsByYear(start_date, end_date));
-        if(albumByYearOptional.isEmpty()) {
+        if(albumByYearOptional.get().isEmpty()) {
             throw new ResourceNotFound("Sorry! No albums found for " + release_year + " :( Please try again.");
         }
 
@@ -99,9 +101,33 @@ public class AlbumService {
         LocalDate end_date = LocalDate.parse((release_decade+9) + "-12-31");
 
         Optional<List<Album>> albumByDecadeOptional = Optional.ofNullable(albumDAO.getAlbumsByDecade(start_date, end_date));
-        if(albumByDecadeOptional.isEmpty()) {
+        if(albumByDecadeOptional.get().isEmpty()) {
             throw new ResourceNotFound("Sorry! No albums found for " + release_decade + "s :( Please try again.");
         }
         return albumDAO.getAlbumsByDecade(start_date, end_date);
     }
+
+    public List<Album> getAlbumsByGenreAndDecade(String genre, int release_decade) {
+        List<Album> albumsByGenreDecade = getAlbumsByDecade(release_decade)
+                .stream()
+                .filter(song -> song.getGenre().equals(genre))
+                .collect(Collectors.toList());
+
+        Optional<List<Album>> albumOptional = Optional.of(albumsByGenreDecade);
+        if(albumOptional.get().isEmpty()) {
+            throw new ResourceNotFound("Sorry! There are no albums from the " + release_decade + "s of the genre " + genre);
+        }
+        return albumsByGenreDecade;
+    }
 }
+//
+//    public List<Song> getSongsByGenreDecade(String genre, int release_decade) {
+//        List<Song> songsByDecade = getSongsByDecade(release_decade);
+//        List<Song> songsByGenreDecade = songsByDecade.stream().filter(song -> song.getGenre() == genre).collect(Collectors.toList());
+//
+//        Optional<List<Song>> songOptional = Optional.ofNullable(songsByGenreDecade);
+//        if(songOptional.isEmpty()){
+//            throw new ResourceNotFound("Sorry! There are no songs from the " + release_decade + "s of the genre " + genre);
+//        }
+//        return songsByGenreDecade;
+//    }

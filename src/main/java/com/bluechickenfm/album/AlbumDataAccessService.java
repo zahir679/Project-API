@@ -90,10 +90,11 @@ public class AlbumDataAccessService implements AlbumDAO {
                 FROM albums
                 INNER JOIN artists
                 ON artists.id = albums.artist_id
-                WHERE artists.artist_name = ?
+                WHERE LOWER(artists.artist_name) = LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new AlbumRowMapper(), artist_name);
     }
+
     @Override
     public int addAlbum(Album album){
         var sql = """
