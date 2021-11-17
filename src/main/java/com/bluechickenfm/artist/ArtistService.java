@@ -51,4 +51,8 @@ public class ArtistService {
     public List<Artist> getArtistsByNationality(String nationality) {
         return artistDAO.getArtistByNationality(nationality);
     }
+
+    public List<Artist> getArtistByBiggestHit(String biggest_hit) {
+        return artistDAO.getArtistByBiggestHit(biggest_hit);
+    }
 }

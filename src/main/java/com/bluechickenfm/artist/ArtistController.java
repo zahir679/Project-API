@@ -40,16 +40,16 @@ public class ArtistController {
     }
 
         //Method to get artists by nationality
-    @GetMapping("/{nationality}")
+    @GetMapping("/nationality/{nationality}")
     public @ResponseBody List<Artist> getArtistsByNationality(@PathVariable String nationality){
         return artistService.getArtistsByNationality(nationality);
     }
 
-//        //Method to get artist by biggest hit
-//    @GetMapping("/{biggest_hit}")
-//    public @ResponseBody List<Artist> getArtistByBiggestHit(@PathVariable String biggest_hit){
-//        return artistService.getArtistByBiggestHit(biggest_hit);
-//    }
+        //Method to get artist by biggest hit
+    @GetMapping("/biggest_hit/{biggest_hit}")
+    public @ResponseBody List<Artist> getArtistByBiggestHit(@PathVariable String biggest_hit){
+        return artistService.getArtistByBiggestHit(biggest_hit);
+    }
 
     //TODO Create a get album by decade function
 

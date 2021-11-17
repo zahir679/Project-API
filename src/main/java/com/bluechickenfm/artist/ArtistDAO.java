@@ -8,4 +8,7 @@ public interface ArtistDAO {
     int addArtist(Artist artist);
     int updateArtist(int id, Artist artist);
     int deleteArtist(int id);
+    List<Artist> getArtistByName(String name);
+    List<Artist> getArtistByNationality(String nationality);
+    List<Artist> getArtistByBiggestHit(String biggest_hit);
 }
