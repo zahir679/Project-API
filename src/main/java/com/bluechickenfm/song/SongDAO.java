@@ -10,7 +10,7 @@ public interface SongDAO {
     Optional<Song> getSongById(int id);
     List<Song> getSongByName(String name);
     List<Song> getSongsByArtist(int artist_id);
-    List<Song> getSongsByAlbum(int release_year);
+    List<Song> getSongsByAlbum(int album_id);
     List<Song> getSongsByGenre(String genre);
     List<Song> getSongsByYear(LocalDate start_date, LocalDate end_date);
     List<Song> getSongsByDecade(LocalDate start_date, LocalDate end_date);

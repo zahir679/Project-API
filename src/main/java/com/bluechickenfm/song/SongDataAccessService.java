@@ -51,7 +51,7 @@ import java.util.Optional;
         return jdbcTemplate.query(sql, new SongRowMapper(), name+'%');
     }
 
-    //    @Override
+    @Override
     public List<Song> getSongsByArtist(int artist_id) {
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
@@ -61,6 +61,7 @@ import java.util.Optional;
         return jdbcTemplate.query(sql, new SongRowMapper(), artist_id);
     }
 
+    @Override
     public List<Song> getSongsByAlbum(int album_id) {
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
@@ -70,6 +71,7 @@ import java.util.Optional;
         return jdbcTemplate.query(sql, new SongRowMapper(), album_id);
     }
 
+    @Override
     public List<Song> getSongsByGenre(String genre) {
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
@@ -79,6 +81,7 @@ import java.util.Optional;
         return jdbcTemplate.query(sql, new SongRowMapper(), genre);
     }
 
+    @Override
     public List<Song> getSongsByYear(LocalDate start_date, LocalDate end_date) {
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
@@ -88,9 +91,8 @@ import java.util.Optional;
         return jdbcTemplate.query(sql, new SongRowMapper(), start_date, end_date);
     }
 
+    @Override
     public List<Song> getSongsByDecade(LocalDate start_date, LocalDate end_date) {
-
-            //TODO: variables for decade range
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
@@ -113,26 +115,26 @@ import java.util.Optional;
             );
         }
 
-        @Override
-        public int updateSong(int id, Song song){
-            var sql = """
-                    UPDATE songs
-                    SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
-                    WHERE id = ?
-                    """;
-            return jdbcTemplate.update(sql, song.getSong_name(), song.getGenre(), song.getDuration(),
-                    song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguages(), song.getPlatform(),
-                    song.getId()
-            );
-        }
-
-        @Override
-        public int deleteSong(int id) {
-            var sql = """
-                DELETE FROM songs
+    @Override
+    public int updateSong(int id, Song song){
+        var sql = """
+                UPDATE songs
+                SET song_name=?, genre=?, duration=?, artist_id=?, album_id=?, release_date=?, languages=?, platform=?
                 WHERE id = ?
                 """;
-            return jdbcTemplate.update(sql, id);
-        }
+        return jdbcTemplate.update(sql, song.getSong_name(), song.getGenre(), song.getDuration(),
+                song.getArtist_id(), song.getAlbum_id(), song.getRelease_date(), song.getLanguages(), song.getPlatform(),
+                song.getId()
+        );
+    }
+
+    @Override
+    public int deleteSong(int id) {
+        var sql = """
+            DELETE FROM songs
+            WHERE id = ?
+            """;
+        return jdbcTemplate.update(sql, id);
+    }
 
 }
