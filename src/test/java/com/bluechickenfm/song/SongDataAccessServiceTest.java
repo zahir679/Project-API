@@ -1,6 +1,7 @@
 package com.bluechickenfm.song;
 
 
+import com.bluechickenfm.exception.ResourceNotFound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class SongDataAccessServiceTest {
@@ -21,7 +23,6 @@ class SongDataAccessServiceTest {
     void setUp() {
         songDAO = mock(SongDAO.class);
         underTest = new SongService(songDAO);
-
     }
 
     @Test
@@ -49,7 +50,6 @@ class SongDataAccessServiceTest {
         // when
         when(songDAO.getSongById(1)).thenReturn(Optional.of(firstSong));
         Optional<Song> actual = underTest.getSongById(1);
-
 
         // then
         assertThat(actual).isEqualTo(Optional.of(firstSong));
