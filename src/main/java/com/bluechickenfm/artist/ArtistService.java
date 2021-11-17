@@ -28,16 +28,19 @@ public class ArtistService {
         return this.artistDAO.getAllArtists();
     }
 
-    public void addArtist(Artist artist) {
+    public String addArtist(Artist artist) {
         this.artistDAO.addArtist(artist);
+        return "Artist added";
     }
 
-    public void updateArtist(int id, Artist artist) {
+    public String updateArtist(int id, Artist artist) {
         this.artistDAO.updateArtist(id, artist);
+        return "Artist updated";
     }
 
-    public void deleteArtist(int id) {
+    public String deleteArtist(int id) {
         this.artistDAO.deleteArtist(id);
+        return "Artist deleted";
     }
 
     public List<Artist> getArtistByName(String name) {
@@ -47,7 +50,7 @@ public class ArtistService {
         }
         return artistDAO.getArtistByName(name);
     }
-    
+
     public List<Artist> getArtistsByNationality(String nationality) {
         return artistDAO.getArtistByNationality(nationality);
     }

@@ -39,9 +39,9 @@ public class SongService {
         return songDAO.getAllSongs();
     }
 
-    public Song getSongById(int id) {
-        return songDAO.getSongById(id)
-                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " does not exist"));
+    public Optional<Song> getSongById(int id) {
+        return Optional.ofNullable(songDAO.getSongById(id)
+                .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " not found")));
     }
 
     public List<Song> getSongByName(String name) {
@@ -129,12 +129,12 @@ public class SongService {
             throw new Conflict("Unable to add song - it already exists!");
         }
         songDAO.addSong(song);
-        return "Song added!";
+        return "Song added";
     }
 
-    //PUT
+//    //PUT
 public String updateSong(int id, Song song) {
-        //check song id exists
+    //check song id exists
     Optional<Song> songOptional = songDAO.getSongById(id);
     if(songOptional.isEmpty()) {
         throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
@@ -145,19 +145,18 @@ public String updateSong(int id, Song song) {
         throw new Conflict("Unable to update song details - song already exists!");
     }
     //check if song is updated in the database
-    if(songDAO.updateSong(id, song) == 0) {
-        return "Song not updated...";
+    if(songDAO.updateSong(id, song) == 1) {
+        return "Song updated!";
     }
-    return "Song updated!";
+    return "Song not updated...";
     //TODO: make sure updated song is not the same as any other song
 }
-
-    //DELETE - Only delete if song exists
+    //DELETE
     public String deleteSong(int id) {
-        Optional<Song> songOptional = songDAO.getSongById(id);
-        if(songOptional.isEmpty()) {
-            throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
-        }
+    //returning null
+//        if(DoesSongExist.check(id)) {
+//            songDAO.deleteSong(id);
+//        }
         songDAO.deleteSong(id);
         return "Song deleted.";
     }

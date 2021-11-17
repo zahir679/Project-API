@@ -1,0 +1,154 @@
+package com.bluechickenfm.album;
+
+
+import com.bluechickenfm.artist.Artist;
+import com.bluechickenfm.exception.ResourceNotFound;
+import com.bluechickenfm.song.Song;
+import org.checkerframework.checker.units.qual.A;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+
+public class albumDataAccessServiceTest {
+    private AlbumDAO albumDAO;
+    private AlbumService underTest;
+
+    @BeforeEach
+    void setUp() {
+        albumDAO = mock(AlbumDAO.class);
+        underTest = new AlbumService(albumDAO);
+    }
+
+    @Test
+    @DisplayName("Test to see if Album is added correctly")
+    void addAlbum(){
+        //given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+
+        //when
+        String actual = underTest.addAlbum(firstAlbum);
+
+        //then
+        assertThat(actual).isEqualTo("Album added");
+    }
+
+    @Test
+    @DisplayName("Test to see if an album can be got by id")
+    void getAlbumById() {
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        // when
+        when(albumDAO.getAlbumById(1)).thenReturn(List.of(firstAlbum));
+        List<Album>actual = underTest.getAlbumById(1);
+        // then
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
+    }
+
+    @Test
+    @DisplayName("Test to see if album can be got by name")
+    void getAlbumByName(){
+        //given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+       List<Album> albums = List.of(firstAlbum);
+        //when
+        when(albumDAO.getAlbumByName("Views")).thenReturn(albums);
+        List<Album> actual = underTest.getAlbumByName("Views");
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
+
+    }
+
+    @Test
+    @DisplayName("Test to see if get album method throws exception when name is incorrect")
+    void getAlbumByNameThrowsException(){
+        //given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        List<Album> albums = List.of(firstAlbum);
+        //when
+        when(albumDAO.getAlbumByName(eq("Views"))).thenReturn(albums);
+
+        // when
+        assertThatThrownBy(() -> underTest.getAlbumByName("Viws"))
+                .isInstanceOf(ResourceNotFound.class)
+                .hasMessageContaining("Sorry! The album Viws has not been found :( Please try again.");
+
+        verify(albumDAO, never()).updateAlbum(any(Integer.class), any(Album.class));
+    }
+
+    @Test
+    @DisplayName("Test to see if all Albums can be got from the database at once")
+    void getAllAlbums() {
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016, 4, 29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        Album thirdAlbum = new Album(3, "Back In Black" , 3 , "Rock" ,
+                LocalDate.of( 1980,07,25),10);
+        Album fourthAlbum = new Album( 4, "25" , 4, "Soul",
+                LocalDate.of(2015,11,20), 11);
+
+        List<Album> AlbumTestDb = List.of(firstAlbum, secondAlbum, thirdAlbum, fourthAlbum);
+
+        // when
+        when(albumDAO.getAllAlbums()).thenReturn(AlbumTestDb);
+        int resultSize = underTest.getAllAlbums().size();
+
+        //then
+        assertThat(resultSize).isEqualTo(4);
+    }
+
+    @Test
+    @DisplayName("Testing if the update album method works correctly")
+    void updateAlbumWhenIdIsRight() {
+        // given
+        Album testAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016, 4, 29), 20);
+
+        when(albumDAO.getAlbumById(eq(1))).thenReturn(List.of(testAlbum));
+        when(albumDAO.updateAlbum(eq(1), eq(testAlbum))).thenReturn(1);
+
+        // when
+        String albumResult = underTest.updateAlbum(1, testAlbum);
+
+        verify(albumDAO).updateAlbum(eq(1), eq(testAlbum));
+        assertThat(albumResult).isEqualTo("Album updated!");
+    }
+
+    @Test
+    @DisplayName("Test to see if a album can be deleted")
+    void deleteAlbum() {
+        //given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016, 4, 29), 20);
+        // when
+        when(albumDAO.deleteAlbum(1)).thenReturn(1);
+        // then
+        String result = underTest.deleteAlbum(1);
+        assertThat(result).isEqualTo("Album deleted!");
+    }
+
+
+
+    @Test
+    @DisplayName("Testing the get album by artist method")
+    void getAlbumByArtist(){
+
+
+    }
+
+}

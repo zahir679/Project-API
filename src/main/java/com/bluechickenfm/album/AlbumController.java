@@ -85,7 +85,7 @@ public class AlbumController {
     //Method to update a whole album
     @PutMapping("/{id}")
     public void updateAlbum(@PathVariable int id,
-                           @RequestBody Album album) {
+                            @RequestBody Album album) {
         albumService.updateAlbum(id, album);
     }
 

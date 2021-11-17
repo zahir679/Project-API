@@ -12,22 +12,22 @@ import java.util.Optional;
 @Repository("chickenSong")
     public class SongDataAccessService implements SongDAO{
 
-        private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     //        private final JdbcTemplate jdbcTemplate;
 
-        public SongDataAccessService(JdbcTemplate jdbcTemplate) {
-            this.jdbcTemplate = jdbcTemplate;
-        }
+    public SongDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-        @Override
-        public List<Song> getAllSongs() {
-            var sql = """
+    @Override
+    public List<Song> getAllSongs() {
+        var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
                 LIMIT 100;
                  """;
-            return jdbcTemplate.query(sql, new SongRowMapper());
-        }
+        return jdbcTemplate.query(sql, new SongRowMapper());
+    }
 
     @Override
     public Optional<Song> getSongById(int id) {
@@ -132,12 +132,18 @@ import java.util.Optional;
                 INSERT INTO songs(song_name, genre, duration, artist_id, album_id, release_date, languages, platform)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                  """;
-            return jdbcTemplate.update(
-                    sql,
-                    song.getSong_name(), song.getGenre(), song.getDuration(), song.getArtist_id(), song.getAlbum_id()
-                    , song.getRelease_date(), song.getLanguages(), song.getPlatform()
-            );
-        }
+        return jdbcTemplate.update(
+                sql,
+                song.getSong_name(),
+                song.getGenre(),
+                song.getDuration(),
+                song.getArtist_id(),
+                song.getAlbum_id(),
+                song.getRelease_date(),
+                song.getLanguages(),
+                song.getPlatform()
+        );
+    }
 
     @Override
     public int updateSong(int id, Song song){
@@ -160,5 +166,4 @@ import java.util.Optional;
             """;
         return jdbcTemplate.update(sql, id);
     }
-
-}
+    }

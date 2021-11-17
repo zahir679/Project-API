@@ -12,7 +12,7 @@ import java.util.function.ToDoubleBiFunction;
 @RestController
 @RequestMapping ("/api/v1/artists")
 public class ArtistController {
-   private ArtistService artistService;
+    private ArtistService artistService;
 
     public ArtistController(ArtistService artistService) {
         this.artistService = artistService;
