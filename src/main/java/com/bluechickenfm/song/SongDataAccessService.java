@@ -46,7 +46,7 @@ import java.util.Optional;
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
-                WHERE song_name LIKE ?
+                WHERE LOWER(song_name) LIKE LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new SongRowMapper(), name+'%');
     }
@@ -76,7 +76,7 @@ import java.util.Optional;
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
                 FROM songs
-                WHERE genre = ?
+                WHERE LOWER(genre) = LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new SongRowMapper(), genre);
     }

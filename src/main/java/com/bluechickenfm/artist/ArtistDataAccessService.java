@@ -36,7 +36,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         var sql = """
                 SELECT *
                 FROM artists
-                WHERE artist_name LIKE ?
+                WHERE LOWER(artist_name) LIKE LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new ArtistRowMapper(), name+'%');
     }
@@ -45,7 +45,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         var sql = """
                 SELECT *
                 FROM artists
-                WHERE nationality LIKE ?
+                WHERE LOWER(nationality) LIKE LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new ArtistRowMapper(), nationality+'%');
     }
@@ -54,7 +54,7 @@ public class ArtistDataAccessService implements ArtistDAO{
         var sql = """
                 SELECT *
                 FROM artists
-                WHERE biggest_hit LIKE ?
+                WHERE LOWER(biggest_hit) LIKE LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new ArtistRowMapper(), biggest_hit+'%');
     }

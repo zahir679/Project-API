@@ -38,7 +38,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         var sql = """
                 SELECT *
                 FROM albums
-                WHERE album_name LIKE ?
+                WHERE LOWER(album_name) LIKE LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new AlbumRowMapper(), name+'%');
     }
@@ -58,7 +58,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         var sql = """
                 SELECT *
                 FROM albums
-                WHERE genre = ?
+                WHERE LOWER(genre) = LOWER(?)
                  """;
         return jdbcTemplate.query(sql, new AlbumRowMapper(), genre);
     }
