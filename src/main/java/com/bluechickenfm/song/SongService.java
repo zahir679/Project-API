@@ -1,9 +1,11 @@
 package com.bluechickenfm.song;
 
-import com.bluechickenfm.exception.Conflict;
-import com.bluechickenfm.exception.DoesSongExist;
-import com.bluechickenfm.exception.InvalidDecade;
-import com.bluechickenfm.exception.ResourceNotFound;
+import com.bluechickenfm.album.Album;
+import com.bluechickenfm.album.AlbumDAO;
+import com.bluechickenfm.album.AlbumDataAccessService;
+import com.bluechickenfm.artist.Artist;
+import com.bluechickenfm.artist.ArtistDAO;
+import com.bluechickenfm.exception.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +18,8 @@ import java.util.Optional;
 @Service
 public class SongService {
     private SongDAO songDAO;
+//    private AlbumDAO albumDAO;
+//    private ArtistDAO artistDAO;
 
     @Autowired
     public SongService(@Qualifier("chickenSong") SongDAO songDAO) {
@@ -87,7 +91,7 @@ public class SongService {
     public List<Song> getSongsByDecade(int release_decade) {
         //Exception to check valid input decade - ends in 0
         if(release_decade % 10 != 0){
-            throw new InvalidDecade("Please enter a valid decade in format yyy0");
+            throw new BadRequest("Please enter a valid decade in format yyy0");
         }
 
         LocalDate start_date = LocalDate.parse(release_decade + "-01-01");
@@ -102,7 +106,20 @@ public class SongService {
 
     //POST
     public String addSong(Song song) {
-        //If song name and artist for song already exist DO NOT ADD SONG
+        //TODO: check artist and album ids exist
+//        AlbumDAO albumDAO;
+//        ArtistDAO artistDAO;
+//        Optional<List<Artist>> artistOptional = Optional.ofNullable(artistDAO.getArtistById(song.getArtist_id()));
+//        Optional<List<Album>> albumOptional = Optional.ofNullable(albumDAO.getAlbumById(song.getAlbum_id()));
+//        if(artistOptional.isEmpty() || albumOptional.isEmpty()){
+//            try {
+//                throw new InvalidId("Artist or album does not exist yet.");
+//            } catch (InvalidId e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        //Check if song name and artist for song already exist
         Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
         if (songOptional.isPresent() && (songOptional.get().contains(song.getArtist_id()))) {
             throw new Conflict("Unable to add song - it already exists!");
@@ -111,18 +128,23 @@ public class SongService {
         return "Song added!";
     }
 
-//    //PUT
+    //PUT
 public String updateSong(int id, Song song) {
-//    Optional<Song> songOptional = songDAO.getSongById(id);
-//    if(songOptional.isEmpty()) {
-//        throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
-//    }
-
-
-    if(songDAO.updateSong(id, song) == 1) {
-        return "Song updated!";
+        //check song id exists
+    Optional<Song> songOptional = songDAO.getSongById(id);
+    if(songOptional.isEmpty()) {
+        throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
     }
-    return "Song not updated...";
+    //check update details does not clash with existing song details
+    Optional<List<Song>> songOptionalName = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
+    if (songOptionalName.isPresent() && (songOptionalName.get().contains(song.getArtist_id()))) {
+        throw new Conflict("Unable to update song details - song already exists!");
+    }
+    //check if song is updated in the database
+    if(songDAO.updateSong(id, song) == 0) {
+        return "Song not updated...";
+    }
+    return "Song updated!";
     //TODO: make sure updated song is not the same as any other song
 }
 
