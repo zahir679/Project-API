@@ -217,9 +217,9 @@ public class albumDataAccessServiceTest {
                 LocalDate.of(1976,10,11), 10);
         List<Album> albums = List.of(firstAlbum, secondAlbum);
         //when
-        when(albumDAO.getAlbumsByDecade(LocalDate.of(2016,1,1), LocalDate.of(2016,12,31))).thenReturn(List.of(firstAlbum));
-        List<Album> actual = underTest.getAlbumsByYear(2016);
-        assertThat(actual).isEqualTo(List.of(firstAlbum));
+        when(albumDAO.getAlbumsByDecade(LocalDate.of(1970,1,1), LocalDate.of(1979,12,31))).thenReturn(List.of(secondAlbum));
+        List<Album> actual = underTest.getAlbumsByDecade(1970);
+        assertThat(actual).isEqualTo(List.of(secondAlbum));
 
     }
 
