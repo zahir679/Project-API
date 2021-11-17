@@ -57,6 +57,7 @@ public class albumDataAccessServiceTest {
         assertThat(actual).isEqualTo(List.of(firstAlbum));
     }
 
+
     @Test
     @DisplayName("Test to see if album can be got by name")
     void getAlbumByName(){
@@ -158,6 +159,25 @@ public class albumDataAccessServiceTest {
         List<Album> actual = underTest.getAlbumsByArtist(1);
         assertThat(actual).isEqualTo(List.of(firstAlbum));
     }
+    @Test
+    @DisplayName("test to see if get album by name method throws exception when album is incorrect")
+    void getArtistByNameThrowsException() {
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+
+        when(albumDAO.getAlbumsByArtist(1)).thenReturn(List.of(firstAlbum));
+
+        // when
+        assertThatThrownBy(() -> underTest.getAlbumsByArtist(2))
+                .isInstanceOf(ResourceNotFound.class)
+                .hasMessageContaining("Sorry! An album by artist " + 2 +" has not been found :( Please try again.");
+
+        verify(albumDAO, never()).getAlbumsByArtist(1);
+    }
 
     @Test
     @DisplayName("Testing the get album by album name method")
@@ -174,6 +194,7 @@ public class albumDataAccessServiceTest {
         assertThat(actual).isEqualTo(List.of(firstAlbum));
 
     }
+
 
     @Test
     @DisplayName("Testing the get album by genre method")
