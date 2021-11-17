@@ -62,6 +62,18 @@ import java.util.Optional;
     }
 
     @Override
+    public List<Song> getSongsByArtistName(String artist_name){
+        var sql = """
+                SELECT songs.id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM artists
+                JOIN songs
+                ON artists.id = songs.artist_id
+                WHERE LOWER(artists.artist_name) = LOWER(?)
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), artist_name);
+    }
+
+    @Override
     public List<Song> getSongsByAlbum(int album_id) {
         var sql = """
                 SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
@@ -69,6 +81,18 @@ import java.util.Optional;
                 WHERE album_id = ?
                  """;
         return jdbcTemplate.query(sql, new SongRowMapper(), album_id);
+    }
+
+    @Override
+    public List<Song> getSongsByAlbumName(String album_name){
+        var sql = """
+                SELECT songs.id, song_name, songs.genre, duration, songs.artist_id, album_id, songs.release_date, languages, platform
+                FROM albums
+                JOIN songs
+                ON albums.id = songs.album_id
+                WHERE LOWER(albums.album_name) = LOWER(?)
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), album_name);
     }
 
     @Override

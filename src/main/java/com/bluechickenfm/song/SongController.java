@@ -38,12 +38,24 @@ public class SongController {
         return songService.getSongsByArtist(artist_id);
     }
 
+    //Method to get songs by artist_name
+    @GetMapping("/artist_name/{artist_name}")
+    public @ResponseBody List<Song> getSongsByArtistName(@PathVariable String artist_name){
+        return songService.getSongsByArtistName(artist_name);
+    }
+
 //    //Method to get songs by album_id
     @GetMapping("/album/{album_id}")
     public @ResponseBody List<Song> getSongsByAlbum(@PathVariable int album_id){
         return songService.getSongsByAlbum(album_id);
     }
-//
+
+    //Method to get songs by album_name
+    @GetMapping("/album_name/{album_name}")
+    public @ResponseBody List<Song> getSongsByAlbumName(@PathVariable String album_name){
+        return songService.getSongsByAlbumName(album_name);
+    }
+
 //    //Method to get songs by genre
     @GetMapping("/genre/{genre}")
     public @ResponseBody List<Song> getSongsByGenre(@PathVariable String genre){
@@ -60,6 +72,11 @@ public class SongController {
     @GetMapping("/decade/{release_decade}")
     public @ResponseBody List<Song> getSongsByDecade(@PathVariable int release_decade){
         return songService.getSongsByDecade(release_decade);
+    }
+
+    @GetMapping("/genre_decade/{genre}/{release_decade}")
+    public @ResponseBody List<Song> getSongsByGenreDecade(@PathVariable String genre, @PathVariable int release_decade){
+        return songService.getSongsByGenreDecade(genre, release_decade);
     }
 
     //POST

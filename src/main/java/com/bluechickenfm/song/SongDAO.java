@@ -17,5 +17,6 @@ public interface SongDAO {
     int addSong(Song song);
     int updateSong(int id, Song song);
     int deleteSong(int id);
-
+    List<Song> getSongsByArtistName(String artist_name);
+    List<Song> getSongsByAlbumName(String album_name);
 }

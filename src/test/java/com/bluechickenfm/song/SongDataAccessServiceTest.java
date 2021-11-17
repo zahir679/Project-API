@@ -1,6 +1,8 @@
 package com.bluechickenfm.song;
 
 
+import com.bluechickenfm.album.AlbumDAO;
+import com.bluechickenfm.artist.ArtistDAO;
 import org.assertj.core.api.AbstractBigDecimalAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,12 +20,14 @@ class SongDataAccessServiceTest {
 
 
     private SongDAO songDAO;
+    private ArtistDAO artistDAO;
+    private AlbumDAO albumDAO;
     private SongService underTest;
 
     @BeforeEach
     void setUp() {
         songDAO = mock(SongDAO.class);
-        underTest = new SongService(songDAO);
+        underTest = new SongService(songDAO, artistDAO, albumDAO);
 
     }
     @Test

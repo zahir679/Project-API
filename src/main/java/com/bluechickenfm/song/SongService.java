@@ -13,15 +13,21 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SongService {
     private SongDAO songDAO;
+    private ArtistDAO artistDAO;
+    private AlbumDAO albumDAO;
 
     @Autowired
-    public SongService(@Qualifier("chickenSong") SongDAO songDAO) {
+    public SongService(@Qualifier("chickenSong") SongDAO songDAO, ArtistDAO artistDAO, AlbumDAO albumDAO) {
         this.songDAO = songDAO;
+        this.artistDAO = artistDAO;
+        this.albumDAO = albumDAO;
     }
 
     //GET
@@ -154,5 +160,32 @@ public String updateSong(int id, Song song) {
         }
         songDAO.deleteSong(id);
         return "Song deleted.";
+    }
+
+    public List<Song> getSongsByArtistName(String artist_name) {
+        Optional<List<Artist>> artistOptional = Optional.ofNullable(artistDAO.getArtistByName(artist_name));
+        if(artistOptional.isEmpty()){
+            throw new ResourceNotFound("Sorry! The artist " + artist_name + " has not been found :(");
+        }
+        return songDAO.getSongsByArtistName(artist_name);
+    }
+
+    public List<Song> getSongsByAlbumName(String album_name) {
+        Optional<List<Album>> albumOptional = Optional.ofNullable(albumDAO.getAlbumByName(album_name));
+        if(albumOptional.isEmpty()){
+            throw new ResourceNotFound("Sorry! The album " + album_name + " has not been found :(");
+        }
+        return songDAO.getSongsByAlbumName(album_name);
+    }
+
+    public List<Song> getSongsByGenreDecade(String genre, int release_decade) {
+        List<Song> songsByDecade = getSongsByDecade(release_decade);
+        List<Song> songsByGenreDecade = songsByDecade.stream().filter(song -> song.getGenre().toLowerCase().equals(genre.toLowerCase())).collect(Collectors.toList());
+
+        Optional<List<Song>> songOptional = Optional.ofNullable(songsByGenreDecade);
+        if(songOptional.get().isEmpty()){
+            throw new ResourceNotFound("Sorry! There are no songs from the " + release_decade + "s of the genre " + genre);
+        }
+        return songsByGenreDecade;
     }
 }
