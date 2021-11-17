@@ -16,4 +16,5 @@ public interface AlbumDAO {
     List<Album> getAlbumsByGenre(String genre);
     List<Album> getAlbumsByYear(LocalDate start_date, LocalDate end_date);
     List<Album> getAlbumsByDecade(LocalDate start_date, LocalDate end_date);
+    List<Album> getAlbumsByArtistName(String artist_name);
 }

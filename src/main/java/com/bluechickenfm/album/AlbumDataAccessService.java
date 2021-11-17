@@ -73,6 +73,7 @@ public class AlbumDataAccessService implements AlbumDAO {
         return jdbcTemplate.query(sql, new AlbumRowMapper(), start_date, end_date);
     }
 
+    @Override
     public List<Album> getAlbumsByDecade(LocalDate start_date, LocalDate end_date){
         var sql = """
                 SELECT *
@@ -82,6 +83,17 @@ public class AlbumDataAccessService implements AlbumDAO {
         return jdbcTemplate.query(sql, new AlbumRowMapper(), start_date, end_date);
     }
 
+    @Override
+    public List<Album> getAlbumsByArtistName(String artist_name){
+        var sql = """
+                SELECT albums.id, album_name, artist_id, genre, release_date, number_of_tracks
+                FROM albums
+                INNER JOIN artists
+                ON artists.id = albums.artist_id
+                WHERE artists.artist_name = ?
+                 """;
+        return jdbcTemplate.query(sql, new AlbumRowMapper(), artist_name);
+    }
     @Override
     public int addAlbum(Album album){
         var sql = """

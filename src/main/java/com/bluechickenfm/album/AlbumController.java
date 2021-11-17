@@ -44,6 +44,11 @@ public class AlbumController {
         return albumService.getAlbumsByArtist(artist_id);
     }
 
+    @GetMapping("/artist_name/{artist_name}")
+    public @ResponseBody List<Album> getAlbumsByArtistName(@PathVariable String artist_name){
+        return albumService.getAlbumsByArtistName(artist_name);
+    }
+
     //Method to get albums by genre
     @GetMapping("/genre/{genre}")
     public @ResponseBody List<Album> getAlbumsByGenre(@PathVariable String genre){

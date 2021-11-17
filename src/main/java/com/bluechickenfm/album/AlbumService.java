@@ -60,6 +60,15 @@ public class AlbumService {
         return albumDAO.getAlbumsByArtist(artist_id);
     }
 
+    public List<Album> getAlbumsByArtistName(String artist_name) {
+        Optional<List<Album>> albumByArtistOptional = Optional.ofNullable(albumDAO.getAlbumsByArtistName(artist_name));
+        if(albumByArtistOptional.get().isEmpty()) {
+            //TODO: return name of artist instead of id
+            throw new ResourceNotFound("Sorry! An album by artist " + artist_name + " has not been found :( Please try again.");
+        }
+        return albumDAO.getAlbumsByArtistName(artist_name);
+    }
+
     public List<Album> getAlbumsByGenre(String genre) {
         Optional<List<Album>> albumByGenreOptional = Optional.ofNullable(albumDAO.getAlbumsByGenre(genre));
         if(albumByGenreOptional.isEmpty()) {
