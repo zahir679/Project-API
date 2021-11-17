@@ -1,17 +1,10 @@
 package com.bluechickenfm.song;
 
 
-import org.assertj.core.api.AbstractBigDecimalAssert;
-import org.flywaydb.core.internal.database.base.Connection;
-import org.flywaydb.core.internal.database.base.Database;
-import org.flywaydb.core.internal.database.base.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 
-import java.nio.file.OpenOption;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -34,7 +27,7 @@ class SongDataAccessServiceTest {
 
     @Test
     @DisplayName("Test to see if songs can be got by id")
-    void getSongsById() {
+    void getSongById() {
         // given
 
         Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
@@ -49,6 +42,18 @@ class SongDataAccessServiceTest {
         assertThat(actual).isEqualTo(Optional.of(firstSong));
     }
 
+    @Test
+    @DisplayName("Test to get song by name")
+    void getSongByName(){
+        //given
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong);
+        //when
+        when(songDAO.getSongByName("My Luv")).thenReturn(songs);
+        List<Song> actual = underTest.getSongByName("My Luv");
+        assertThat(actual).isEqualTo(List.of(firstSong));
+
+    }
 
 
 
@@ -75,35 +80,36 @@ class SongDataAccessServiceTest {
 
     }
 
-
-
+//
 //    @Test
-//        void canGetPeopleFromDB() {
-//            // given
-//        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-//        List<Song> songs = List.of(firstSong);
-//            // when
-//            when(songDAO.getAllSongs()).thenReturn((List<Song>) firstSong);
-//            // then
-//            assertThat(underTest.getAllSongs()).isEqualTo(firstSong);
+//    @DisplayName("Testing if the update method works correctly")
+//    void updateSong() {
+//        // given
+//        Song firstSong = new Song(2, "My Luv", "K-pop", 180, 118, 118,
+//                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+//        Song updatedFirstSong = new Song(2, "My Luv remix", "K-pop", 180, 118, 118,
+//                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+//        underTest.addSong(firstSong);
+//        underTest.updateSong(2, updatedFirstSong);
+//        Optional<Song> updated = underTest.getSongById(2);
+//        assertThat(updated).isPresent().hasValueSatisfying(v -> {
+//            assertThat(updated).isEqualTo(updatedFirstSong);
+//        });
+//    }
+//
+
+        // when
+//        Update song
+//        fetch updated song
+//        compare the values of the song
+
+//        if(songDAO.updateSong(2, firstSong) == 1) {
+//            String updateResult = underTest.updateSong(2, updatedFirstSong);
+//            //then
+//            assertThat(updateResult).isEqualTo("Song updated!");
 //        }
 
-
-    @Test
-    @DisplayName("Testing if the update method works correctly")
-    void updateSong() {
-        // given
-        Song firstSong = new Song(2, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-        Optional <Song> songs = Optional.of(firstSong);
-        // when
-        when(songDAO.updateSong(2, firstSong)).thenReturn(1);
-        String updateResult = underTest.updateSong(2, firstSong);
-        //then
-        assertThat(updateResult).isEqualTo("Song updated!");
-
-
-
-    }
+//    }
 
 
 

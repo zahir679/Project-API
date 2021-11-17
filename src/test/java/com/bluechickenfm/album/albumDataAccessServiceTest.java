@@ -24,7 +24,7 @@ public class albumDataAccessServiceTest {
         underTest = new AlbumService(albumDAO);
     }
     @Test
-    @DisplayName("Test to see if artist can be got by id")
+    @DisplayName("Test to see if album can be got by id")
     void canGetAlbumsById() {
         // given
         Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",

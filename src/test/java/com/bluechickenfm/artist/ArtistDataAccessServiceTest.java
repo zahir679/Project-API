@@ -68,7 +68,7 @@ public class ArtistDataAccessServiceTest {
     }
 
     @Test
-    @DisplayName("Test to see if a song can be deleted")
+    @DisplayName("Test to see if an artist can be deleted")
     void deleteArtist() {
         //given
         Artist firstArtist = new Artist(2, "Drake", "Canadian", "One Dance");

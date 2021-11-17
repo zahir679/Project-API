@@ -111,13 +111,14 @@ public class SongService {
 //    }
 
     //POST
-    public void addSong(Song song) {
+    public String addSong(Song song) {
         //Exception for if song already exists
 //        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
 //        if (songOptional.isPresent() && songOptional.get().contains(song.getArtist_id())) {
 //            throw new Conflict("Song already exists!");
 //        }
         songDAO.addSong(song);
+        return "Song added";
     }
 
 //    //PUT
