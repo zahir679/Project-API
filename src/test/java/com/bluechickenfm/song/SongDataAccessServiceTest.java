@@ -1,7 +1,9 @@
 package com.bluechickenfm.song;
 
 
+import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.ResourceNotFound;
+import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -190,6 +192,35 @@ class SongDataAccessServiceTest {
 
         verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
     }
+//    @Test
+//    @DisplayName("Testing if the update method throw an exception")
+//    void updateSongThrowsConflict() {
+//        // given
+//        Song song = new Song(
+//                1,
+//                "My Luv",
+//                "K-pop",
+//                180,
+//                118,
+//                118,
+//                LocalDate.of(2018, 9, 15),
+//                "Korean",
+//                "Spotify"
+//        );
+//
+//        when(songDAO.getSongById(eq(1))).thenReturn(Optional.of(song));
+//        when(songDAO.updateSong(eq(1), eq(song))).thenReturn(1);
+//        when(songDAO.getSongByName(eq("My Luv"))).thenReturn();
+//
+//
+//        // when
+//        assertThatThrownBy(() -> underTest.updateSong(1, song))
+//                .isInstanceOf(Conflict.class)
+//                .hasMessageContaining("Unable to update song details - song already exists!");
+//
+//        verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
+//    }
+
 
 
     @Test
