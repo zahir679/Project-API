@@ -41,7 +41,7 @@ public class SongService {
 
     public List<Song> getSongByName(String name) {
         Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
-        if(songByNameOptional.isEmpty()){
+        if(songByNameOptional.get().isEmpty()){
             throw new ResourceNotFound("Sorry! " + name + " has not been found :( Please try again.");
         }
         return songDAO.getSongByName(name);

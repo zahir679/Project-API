@@ -25,6 +25,7 @@ class SongDataAccessServiceTest {
         underTest = new SongService(songDAO);
     }
 
+    // Start Of tests
     @Test
     @DisplayName("Test to see if song is added")
     void addSong(){
@@ -66,6 +67,23 @@ class SongDataAccessServiceTest {
         List<Song> actual = underTest.getSongByName("My Luv");
         assertThat(actual).isEqualTo(List.of(firstSong));
 
+    }
+
+    @Test
+    @DisplayName("test to see if get song by name method throws exception when name is incorrect")
+    void getSongByNameThrowsException() {
+        // given
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong);
+
+        when(songDAO.getSongByName(eq("My Luv"))).thenReturn(songs);
+
+        // when
+        assertThatThrownBy(() -> underTest.getSongByName("My Luver"))
+                .isInstanceOf(ResourceNotFound.class)
+                .hasMessageContaining("Sorry! My Luver has not been found :( Please try again.");
+
+        verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
     }
 
 

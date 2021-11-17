@@ -2,11 +2,11 @@ package com.bluechickenfm.album;
 
 import com.bluechickenfm.song.Song;
 import com.bluechickenfm.song.SongService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
-
 
 @RestController
 @RequestMapping ("/api/v1/albums")
@@ -32,30 +32,35 @@ public class AlbumController {
         return albumService.getAlbumById(id);
     }
 
-//    //Method to get albums by name
-//    @GetMapping("/albums/name")
-//    public @ResponseBody
-//    List<Album> getAlbumByName(String name){
-//        return albumService.getAlbumByName(name);
-//    }
+    //Method to get albums by name
+    @GetMapping("/name/{name}")
+    public @ResponseBody List<Album> getAlbumByName(@PathVariable String name){
+        return albumService.getAlbumByName(name);
+    }
 
-//        //Method to get albums by artist_id
-//    @GetMapping("/albums/artist/{artist_id}")
-//    public @ResponseBody List<Album> getAlbumsByArtist(@PathVariable int artist_id){
-//        return albumService.getAlbumsByArtist(artist_id);
-//    }
+    //Method to get albums by artist_id
+    @GetMapping("/artist/{artist_id}")
+    public @ResponseBody List<Album> getAlbumsByArtist(@PathVariable int artist_id){
+        return albumService.getAlbumsByArtist(artist_id);
+    }
 
-//        //Method to get albums by genre
-//    @GetMapping("/albums/{genre}")
-//    public @ResponseBody List<Song> getAlbumsByGenre(@PathVariable String genre){
-//        return albumService.getAlbumsByGenre(genre);
-//    }
+    //Method to get albums by genre
+    @GetMapping("/genre/{genre}")
+    public @ResponseBody List<Album> getAlbumsByGenre(@PathVariable String genre){
+        return albumService.getAlbumsByGenre(genre);
+    }
 
-//        //Method to get albums by year
-//    @GetMapping("/albums/{release_year}")
-//    public @ResponseBody List<Album> getAlbumsByYear(@PathVariable int release_year){
-//        return albumService.getAlbumsByYear(release_year);
-//    }
+    //Method to get albums by year
+    @GetMapping("/year/{release_year}")
+    public @ResponseBody List<Album> getAlbumsByYear(@PathVariable int release_year){
+        return albumService.getAlbumsByYear(release_year);
+    }
+
+    //Method to get albums by decade
+    @GetMapping("/decade/{release_decade}")
+    public @ResponseBody List<Album> getAlbumsByDecade(@PathVariable int release_decade){
+        return albumService.getAlbumsByDecade(release_decade);
+    }
 
     //TODO Create a get album by decade function
 
@@ -70,7 +75,7 @@ public class AlbumController {
     //Method to update a whole album
     @PutMapping("/{id}")
     public void updateAlbum(@PathVariable int id,
-                           @RequestBody Album album) {
+                            @RequestBody Album album) {
         albumService.updateAlbum(id, album);
     }
 
