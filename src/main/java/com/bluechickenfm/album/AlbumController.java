@@ -44,6 +44,11 @@ public class AlbumController {
         return albumService.getAlbumsByArtist(artist_id);
     }
 
+    @GetMapping("/artist_name/{artist_name}")
+    public @ResponseBody List<Album> getAlbumsByArtistName(@PathVariable String artist_name){
+        return albumService.getAlbumsByArtistName(artist_name);
+    }
+
     //Method to get albums by genre
     @GetMapping("/genre/{genre}")
     public @ResponseBody List<Album> getAlbumsByGenre(@PathVariable String genre){
@@ -56,13 +61,18 @@ public class AlbumController {
         return albumService.getAlbumsByYear(release_year);
     }
 
-    //Method to get albums by decade
+    //Method to get albums by genre and decade
     @GetMapping("/decade/{release_decade}")
     public @ResponseBody List<Album> getAlbumsByDecade(@PathVariable int release_decade){
         return albumService.getAlbumsByDecade(release_decade);
     }
 
-    //TODO Create a get album by decade function
+    //Method to get albums by genre and decade
+    @GetMapping("/genre_decade/{genre}/{release_decade}")
+    public @ResponseBody List<Album> getAlbumsByGenreAndDecade(@PathVariable String genre,
+                                                               @PathVariable int release_decade){
+        return albumService.getAlbumsByGenreAndDecade(genre, release_decade);
+    }
 
     //POST
     //Add song

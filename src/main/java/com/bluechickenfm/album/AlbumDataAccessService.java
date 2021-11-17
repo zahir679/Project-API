@@ -83,6 +83,18 @@ public class AlbumDataAccessService implements AlbumDAO {
     }
 
     @Override
+    public List<Album> getAlbumsByArtistName(String artist_name){
+        var sql = """
+                SELECT albums.id, album_name, artist_id, genre, release_date, number_of_tracks
+                FROM albums
+                INNER JOIN artists
+                ON artists.id = albums.artist_id
+                WHERE LOWER(artists.artist_name) = LOWER(?)
+                 """;
+        return jdbcTemplate.query(sql, new AlbumRowMapper(), artist_name);
+    }
+
+    @Override
     public int addAlbum(Album album){
         var sql = """
                 INSERT INTO albums(album_name, artist_id, genre, release_date, number_of_tracks)
