@@ -24,7 +24,6 @@ class SongDataAccessServiceTest {
 
     }
 
-
     @Test
     @DisplayName("Test to see if song is added")
     void addSong(){
@@ -94,22 +93,85 @@ class SongDataAccessServiceTest {
 
     }
 
-//
-//    @Test
-//    @DisplayName("Testing if the update method works correctly")
-//    void updateSong() {
-//        // given
-//        Song firstSong = new Song(2, "My Luv", "K-pop", 180, 118, 118,
-//                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-//        Song updatedFirstSong = new Song(2, "My Luv remix", "K-pop", 180, 118, 118,
-//                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-//        underTest.addSong(firstSong);
-//        underTest.updateSong(2, updatedFirstSong);
-//        Optional<Song> updated = underTest.getSongById(2);
-//        assertThat(updated).isPresent().hasValueSatisfying(v -> {
-//            assertThat(updated).isEqualTo(updatedFirstSong);
-//        });
-//    }
+
+    @Test
+    @DisplayName("Testing if the update method works correctly")
+    void updateSong() {
+        // given
+        Song song = new Song(
+                1,
+                "My Luv",
+                "K-pop",
+                180,
+                118,
+                118,
+                LocalDate.of(2018, 9, 15),
+                "Korean",
+                "Spotify"
+        );
+
+        when(songDAO.getSongById(eq(1))).thenReturn(Optional.of(song));
+        when(songDAO.updateSong(eq(1), eq(song))).thenReturn(1);
+
+        // when
+        String result = underTest.updateSong(1, song);
+
+        verify(songDAO).updateSong(eq(1), eq(song));
+        assertThat(result).isEqualTo("Song updated!");
+    }
+
+
+    @Test
+    @DisplayName("Testing if the update method works correctly")
+    void updateSong2() {
+        // given
+        Song song = new Song(
+                1,
+                "My Luv",
+                "K-pop",
+                180,
+                118,
+                118,
+                LocalDate.of(2018, 9, 15),
+                "Korean",
+                "Spotify"
+        );
+
+        when(songDAO.getSongById(eq(1))).thenReturn(Optional.of(song));
+        when(songDAO.updateSong(eq(1), eq(song))).thenReturn(0);
+
+        // when
+        String result = underTest.updateSong(1, song);
+
+        verify(songDAO).updateSong(eq(1), eq(song));
+        assertThat(result).isEqualTo("Song not updated...");
+    }
+
+    @Test
+    @DisplayName("Testing if the update method works correctly")
+    void updateSong3() {
+        // given
+        Song song = new Song(
+                1,
+                "My Luv",
+                "K-pop",
+                180,
+                118,
+                118,
+                LocalDate.of(2018, 9, 15),
+                "Korean",
+                "Spotify"
+        );
+
+        when(songDAO.getSongById(eq(1))).thenReturn(Optional.empty());
+
+        // when
+        assertThatThrownBy(() -> underTest.updateSong(1, song))
+                .isInstanceOf(ResourceNotFound.class)
+                        .hasMessageContaining("Sorry! Song with id 1 has not been found :(");
+
+        verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
+    }
 //
 
         // when

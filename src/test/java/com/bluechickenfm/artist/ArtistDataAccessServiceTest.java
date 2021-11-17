@@ -28,6 +28,18 @@ public class ArtistDataAccessServiceTest {
         artistDAO = mock(ArtistDAO.class);
         underTest = new ArtistService(artistDAO);
     }
+    @Test
+    @DisplayName("Test to see if artist is added")
+    void addSong(){
+        //given
+        Artist firstArtist = new Artist(1, "Drake", "Canadian", "One Dance");
+        //when
+        String actual = underTest.addArtist(firstArtist);
+
+        //then
+        assertThat(actual).isEqualTo("Artist added");
+
+    }
         @Test
         @DisplayName("Test to see if artist can be got by id")
         void canGetArtistsById() {

@@ -22,8 +22,9 @@ public class ArtistService {
         return this.artistDAO.getAllArtists();
     }
 
-    public void addArtist(Artist artist) {
+    public String addArtist(Artist artist) {
         this.artistDAO.addArtist(artist);
+        return "Artist added";
     }
 
     public void updateArtist(int id, Artist artist) {
