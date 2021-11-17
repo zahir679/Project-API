@@ -96,7 +96,7 @@ class SongDataAccessServiceTest {
 
     @Test
     @DisplayName("Testing if the update method works correctly")
-    void updateSong() {
+    void updateSongWhenIdIsRight() {
         // given
         Song song = new Song(
                 1,
@@ -122,8 +122,8 @@ class SongDataAccessServiceTest {
 
 
     @Test
-    @DisplayName("Testing if the update method works correctly")
-    void updateSong2() {
+    @DisplayName("Testing if the update method works incorrectly")
+    void updateSongWhenIdIsWrong() {
         // given
         Song song = new Song(
                 1,
@@ -148,8 +148,8 @@ class SongDataAccessServiceTest {
     }
 
     @Test
-    @DisplayName("Testing if the update method works correctly")
-    void updateSong3() {
+    @DisplayName("Testing if the update method throw an exception")
+    void updateSongThrowsException() {
         // given
         Song song = new Song(
                 1,
@@ -172,22 +172,6 @@ class SongDataAccessServiceTest {
 
         verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
     }
-//
-
-        // when
-//        Update song
-//        fetch updated song
-//        compare the values of the song
-
-//        if(songDAO.updateSong(2, firstSong) == 1) {
-//            String updateResult = underTest.updateSong(2, updatedFirstSong);
-//            //then
-//            assertThat(updateResult).isEqualTo("Song updated!");
-//        }
-
-//    }
-
-
 
 
     @Test
