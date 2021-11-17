@@ -145,10 +145,88 @@ public class albumDataAccessServiceTest {
 
 
     @Test
-    @DisplayName("Testing the get album by artist method")
+    @DisplayName("Testing the get album by album id method")
     void getAlbumByArtist(){
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+        //when
+        when(albumDAO.getAlbumsByArtist(1)).thenReturn(List.of(firstAlbum));
+        List<Album> actual = underTest.getAlbumsByArtist(1);
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
+    }
 
+    @Test
+    @DisplayName("Testing the get album by album name method")
+    void getAlbumByArtistName(){
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+        //when
+        when(albumDAO.getAlbumsByArtistName("Drake")).thenReturn(List.of(firstAlbum));
+        List<Album> actual = underTest.getAlbumsByArtistName("Drake");
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
 
     }
 
+    @Test
+    @DisplayName("Testing the get album by genre method")
+    void getAlbumByGenre(){
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+        //when
+        when(albumDAO.getAlbumsByGenre("Pop")).thenReturn(List.of(secondAlbum));
+        List<Album> actual = underTest.getAlbumsByGenre("Pop");
+        assertThat(actual).isEqualTo(List.of(secondAlbum));
+
+    }
+
+    @Test
+    @DisplayName("Testing the get album by year method")
+    void getAlbumByYear(){
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+        //when
+        when(albumDAO.getAlbumsByYear(LocalDate.of(2016,1,1), LocalDate.of(2016,12,31))).thenReturn(List.of(firstAlbum));
+        List<Album> actual = underTest.getAlbumsByYear(2016);
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
+
+    }
+
+    @Test
+    @DisplayName("Testing the get album by Decade method")
+    void getAlbumByDecade(){
+        // given
+        Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
+                LocalDate.of(2016,4,29), 20);
+        Album secondAlbum = new Album(2, "Arrival", 2, "Pop" ,
+                LocalDate.of(1976,10,11), 10);
+        List<Album> albums = List.of(firstAlbum, secondAlbum);
+        //when
+        when(albumDAO.getAlbumsByDecade(LocalDate.of(2016,1,1), LocalDate.of(2016,12,31))).thenReturn(List.of(firstAlbum));
+        List<Album> actual = underTest.getAlbumsByYear(2016);
+        assertThat(actual).isEqualTo(List.of(firstAlbum));
+
+    }
+
+
+
+
+
+
 }
+
