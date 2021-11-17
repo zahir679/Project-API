@@ -1,5 +1,6 @@
 package com.bluechickenfm.song;
 
+import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.DoesSongExist;
 import com.bluechickenfm.exception.ResourceNotFound;
 
@@ -123,82 +124,23 @@ public class SongService {
 
 //    //PUT
 public String updateSong(int id, Song song) {
+    //check song id exists
     Optional<Song> songOptional = songDAO.getSongById(id);
     if(songOptional.isEmpty()) {
         throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
     }
+    //check update details does not clash with existing song details
+    Optional<List<Song>> songOptionalName = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
+    if (songOptionalName.isPresent() && (songOptionalName.get().contains(song.getArtist_id()))) {
+        throw new Conflict("Unable to update song details - song already exists!");
+    }
+    //check if song is updated in the database
     if(songDAO.updateSong(id, song) == 1) {
         return "Song updated!";
     }
     return "Song not updated...";
     //TODO: make sure updated song is not the same as any other song
 }
-
-//    public void updateSongName(int id, String name) {
-//        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
-//        if(songOptional.isEmpty()) {
-//            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
-//        }
-//        songDAO.updateSongName(id, name);
-//    }
-//
-//    public void updateSongGenre(int id, String genre) {
-//        Optional<Song> songOptional = Optional.ofNullable(songDAO.getSongById(id));
-//        if(songOptional.isEmpty()) {
-//            throw new ResourceNotFound("Sorry! " + id + " has not been found :( Please try again.");
-//        }
-//        songDAO.updateSongGenre();
-//    }
-//
-//    public void updateSongDuration(int id, int duration) {
-//        songDAO.updateSongDuration();
-//    }
-//
-//    public void updateSongReleaseDate(int id, LocalDate release_date) {
-//        songDAO.updateSongReleaseDate(id, release_date);
-//    }
-//
-//    public void updateSongLanguage(int id, String language) {
-//        songDAO.updateSongLanguage();
-//    }
-//
-//    public void updateSongArtistId(int id, int artist_id) {
-//        songDAO.updateSongArtistId();
-//    }
-//
-//    public void updateSongAlbumId(int id, String album_id) {
-//        songDAO.updateSongAlbumId();
-//    }
-//
-//    public void updateSongName(int id, String name) {
-//        songDAO.updateSongName(id, name);
-//    }
-//
-//    public void updateSongGenre(int id, String genre) {
-//        songDAO.updateSongGenre();
-//    }
-//
-//    public void updateSongDuration(int id, int duration) {
-//        songDAO.updateSongDuration();
-//    }
-//
-//    public void updateSongReleaseDate(int id, LocalDate release_date) {
-//        songDAO.updateSongReleaseDate(id, release_date);
-//    }
-//
-//    public void updateSongLanguage(int id, String language) {
-//        songDAO.updateSongLanguage();
-//    }
-//
-//    public void updateSongArtistId(int id, int artist_id) {
-//        songDAO.updateSongArtistId();
-//    }
-//
-//    public void updateSongAlbumId(int id, String album_id) {
-//        songDAO.updateSongAlbumId();
-//    }
-
-
     //DELETE
     public String deleteSong(int id) {
     //returning null
