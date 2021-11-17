@@ -8,7 +8,7 @@ public interface SongDAO {
     List<Song> getAllSongs();
     Optional<Song> getSongById(int id);
     List<Song> getSongsByArtist(int artist_id);
-//    List<Song> getSongsByAlbum(int release_year);
+    List<Song> getSongsByAlbum(int release_year);
 //    List<Song> getSongsByGenre(String genre);
 //    List<Song> getSongsByDecade(int release_decade);
     int addSong(Song song);

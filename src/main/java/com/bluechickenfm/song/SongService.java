@@ -34,12 +34,13 @@ public class SongService {
                 .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " does not exist"));
     }
 
+    //TODO return partial matches as well
     public Song getSongByName(String name) {
         return songDAO.getSongByName(name)
                 .orElseThrow(() -> new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again."));
     }
 
-
+    //TODO return partial matches as well
     public List<Song> getSongsByArtist(int artist_id) {
         Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
         if(songByArtistOptional.get().isEmpty()) {
@@ -49,14 +50,14 @@ public class SongService {
         return songDAO.getSongsByArtist(artist_id);
     }
 //
-//    public List<Song> getSongsByAlbum(int album_id) {
-//        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
-//        if(songByAlbumOptional.isEmpty()) {
-//            //TODO: return name of album instead of id
-//            throw new ResourceNotFound("Sorry! " + album_id + "has not been found :( Please try again.");
-//        }
-//        return songDAO.getSongsByAlbum(album_id);
-//    }
+    public List<Song> getSongsByAlbum(int album_id) {
+        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
+        if(songByAlbumOptional.get().isEmpty()) {
+            //TODO: return name of album instead of id
+            throw new ResourceNotFound("Sorry! Album with id " + album_id + " has not been found :( Please try again.");
+        }
+        return songDAO.getSongsByAlbum(album_id);
+    }
 //
 //    public List<Song> getSongsByGenre(String genre) {
 //        Optional<List<Song>> songByGenreOptional = Optional.ofNullable(songDAO.getSongsByGenre(genre));
@@ -120,9 +121,11 @@ public class SongService {
         if(songOptional.isEmpty()) {
             throw new ResourceNotFound("Sorry! Song with id " + id + " has not been found :(");
         }
-        songDAO.updateSong(id, song);
+        if(songDAO.updateSong(id, song) == 1) {
+            return "Song updated!";
+        }
+        return "Song not updated...";
         //TODO: make sure updated song is not the same as any other song
-        return "Song updated!";
     }
 
 //    public void updateSongName(int id, String name) {

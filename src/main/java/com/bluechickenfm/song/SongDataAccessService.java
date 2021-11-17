@@ -95,4 +95,15 @@ import java.util.Optional;
                  """;
         return jdbcTemplate.query(sql, new SongRowMapper(), artist_id);
     }
+
+    public List<Song> getSongsByAlbum(int album_id) {
+        var sql = """
+                SELECT id, song_name, genre, duration, artist_id, album_id, release_date, languages, platform
+                FROM songs
+                WHERE album_id = ?
+                 """;
+        return jdbcTemplate.query(sql, new SongRowMapper(), album_id);
+    }
+
+
 }

@@ -12,7 +12,7 @@ public class Song {
     private LocalDate release_date;
 //    private int release_year;
 //    private double release_decade;
-    private String language;
+    private String languages;
     private String platform;
 
     public Song(int id, String song_name, String genre, int duration, int artist_id, int album_id, LocalDate release_date, String language, String platform) {
@@ -23,10 +23,9 @@ public class Song {
         this.artist_id = artist_id;
         this.album_id = album_id;
         this.release_date = release_date;
-        this.language = language;
+        this.languages = language;
         this.platform = platform;
     }
-
 
     public int getId() {
         return id;
@@ -93,12 +92,12 @@ public class Song {
         this.release_date = release_date;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getLanguages() {
+        return languages;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguages(String languages) {
+        this.languages = languages;
     }
 
     @Override
@@ -110,7 +109,7 @@ public class Song {
                 ", artist_id=" + artist_id +
                 ", album_id=" + album_id +
                 ", release_date=" + release_date +
-                ", language='" + language + '\'' +
+                ", language='" + languages + '\'' +
                 '}';
     }
 

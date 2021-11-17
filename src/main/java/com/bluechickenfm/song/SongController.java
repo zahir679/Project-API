@@ -39,10 +39,10 @@ public class SongController {
     }
 
 //    //Method to get songs by album_id
-//    @GetMapping("/songs/{album_id}")
-//    public @ResponseBody List<Song> getSongsByAlbum(@PathVariable int album_id){
-//        return songService.getSongsByAlbum(album_id);
-//    }
+    @GetMapping("/album/{album_id}")
+    public @ResponseBody List<Song> getSongsByAlbum(@PathVariable int album_id){
+        return songService.getSongsByAlbum(album_id);
+    }
 //
 //    //Method to get songs by genre
 //    @GetMapping("/songs/{genre}")
@@ -71,7 +71,7 @@ public class SongController {
 
     //PUT
     //Method to update a whole song
-    @PutMapping("update/{id}")
+    @PutMapping("/{id}")
     public String updateSong(@PathVariable int id,
                            @RequestBody Song song) {
         return songService.updateSong(id, song);
