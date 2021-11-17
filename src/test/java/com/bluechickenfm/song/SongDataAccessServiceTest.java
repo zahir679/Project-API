@@ -1,6 +1,8 @@
 package com.bluechickenfm.song;
 
 
+import com.bluechickenfm.album.AlbumDAO;
+import com.bluechickenfm.artist.ArtistDAO;
 import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.ResourceNotFound;
 import org.checkerframework.checker.nullness.Opt;
@@ -19,12 +21,16 @@ class SongDataAccessServiceTest {
 
 
     private SongDAO songDAO;
+    private ArtistDAO artistDAO;
+    private AlbumDAO albumDAO;
     private SongService underTest;
 
     @BeforeEach
     void setUp() {
         songDAO = mock(SongDAO.class);
-        underTest = new SongService(songDAO);
+        artistDAO = mock(ArtistDAO.class);
+        albumDAO = mock(AlbumDAO.class);
+        underTest = new SongService(songDAO, artistDAO, albumDAO);
     }
 
     // Start Of tests
@@ -83,7 +89,7 @@ class SongDataAccessServiceTest {
         // when
         assertThatThrownBy(() -> underTest.getSongByName("My Luver"))
                 .isInstanceOf(ResourceNotFound.class)
-                .hasMessageContaining("Sorry! My Luver has not been found :( Please try again.");
+                .hasMessageContaining("Sorry! The song My Luver has not been found :( Please try again.");
 
         verify(songDAO, never()).updateSong(any(Integer.class), any(Song.class));
     }

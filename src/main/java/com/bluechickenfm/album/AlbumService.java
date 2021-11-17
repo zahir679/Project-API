@@ -62,6 +62,13 @@ public class AlbumService {
         }
         return albumDAO.getAlbumsByArtist(artist_id);
     }
+    public List<Album> getAlbumsByArtistName(String artist_name) {
+        Optional<List<Album>> albumByArtistOptional = Optional.ofNullable(albumDAO.getAlbumsByArtistName(artist_name));
+        if(albumByArtistOptional.get().isEmpty()) {
+            throw new ResourceNotFound("Sorry! An album by artist " + artist_name + " has not been found 😦 Please try again.");
+        }
+        return albumDAO.getAlbumsByArtistName(artist_name);
+    }
 
     public List<Album> getAlbumsByGenre(String genre) {
         Optional<List<Album>> albumByGenreOptional = Optional.ofNullable(albumDAO.getAlbumsByGenre(genre));
@@ -97,5 +104,17 @@ public class AlbumService {
             throw new ResourceNotFound("Sorry! No albums found for " + release_decade + "s :( Please try again.");
         }
         return albumDAO.getAlbumsByDecade(start_date, end_date);
+    }
+    public List<Album> getAlbumsByGenreAndDecade(String genre, int release_decade) {
+        List<Album> albumsByGenreDecade = getAlbumsByDecade(release_decade)
+                .stream()
+                .filter(album -> album.getGenre().toLowerCase().equals(genre.toLowerCase()))
+                .collect(Collectors.toList());
+
+        Optional<List<Album>> albumOptional = Optional.of(albumsByGenreDecade);
+        if(albumOptional.get().isEmpty()) {
+            throw new ResourceNotFound("Sorry! There are no albums from the " + release_decade + "s of the genre " + genre);
+        }
+        return albumsByGenreDecade;
     }
 }
