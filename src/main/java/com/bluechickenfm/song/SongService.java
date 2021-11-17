@@ -2,12 +2,14 @@ package com.bluechickenfm.song;
 
 import com.bluechickenfm.exception.Conflict;
 import com.bluechickenfm.exception.DoesSongExist;
+import com.bluechickenfm.exception.InvalidDecade;
 import com.bluechickenfm.exception.ResourceNotFound;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +36,18 @@ public class SongService {
                 .orElseThrow(() -> new ResourceNotFound("Song with id " + id + " does not exist"));
     }
 
-    public Song getSongByName(String name) {
-        return songDAO.getSongByName(name)
-                .orElseThrow(() -> new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again."));
+    //TODO return partial matches as well
+    public List<Song> getSongByName(String name) {
+        Optional<List<Song>> songByNameOptional = Optional.ofNullable(songDAO.getSongByName(name));
+        if(songByNameOptional.get().isEmpty()) {
+            throw new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again.");
+        }
+        return songDAO.getSongByName(name);
+//                .orElseThrow(() -> new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again."));
     }
 
 
+    //TODO return partial matches as well
     public List<Song> getSongsByArtist(int artist_id) {
         Optional<List<Song>> songByArtistOptional = Optional.ofNullable(songDAO.getSongsByArtist(artist_id));
         if(songByArtistOptional.get().isEmpty()) {
@@ -49,65 +57,56 @@ public class SongService {
         return songDAO.getSongsByArtist(artist_id);
     }
 //
-//    public List<Song> getSongsByAlbum(int album_id) {
-//        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
-//        if(songByAlbumOptional.isEmpty()) {
-//            //TODO: return name of album instead of id
-//            throw new ResourceNotFound("Sorry! " + album_id + "has not been found :( Please try again.");
-//        }
-//        return songDAO.getSongsByAlbum(album_id);
-//    }
+    public List<Song> getSongsByAlbum(int album_id) {
+        Optional<List<Song>> songByAlbumOptional = Optional.ofNullable(songDAO.getSongsByArtist(album_id));
+        if(songByAlbumOptional.get().isEmpty()) {
+            //TODO: return name of album instead of id
+            throw new ResourceNotFound("Sorry! Album with id " + album_id + " has not been found :( Please try again.");
+        }
+        return songDAO.getSongsByAlbum(album_id);
+    }
 //
-//    public List<Song> getSongsByGenre(String genre) {
-//        Optional<List<Song>> songByGenreOptional = Optional.ofNullable(songDAO.getSongsByGenre(genre));
-//        if(songByGenreOptional.isEmpty()) {
-//            throw new ResourceNotFound("Sorry, your music taste is too unique. " + genre + " has not been found :(");
-//        }
-//        return songDAO.getSongsByGenre(genre);
-//    }
-//
-//    public List<Song> getSongsByYear(int release_year) {
-//        Optional<List<Song>> songByYearOptional = Optional.ofNullable(songDAO.getSongsByYear(release_year));
-//        if(songByYearOptional.isEmpty()) {
-//            throw new ResourceNotFound("Sorry! No songs found for " + release_year + " :( Please try again.");
-//        }
-//        return songDAO.getSongsByYear(release_year);
-//    }
-//
-//    public List<Song> getSongsByDecade(int release_decade) {
-//        Optional<List<Song>> songByDecadeOptional = Optional.ofNullable(songDAO.getSongsByDecade(release_decade));
-//        if(songByDecadeOptional.isEmpty()) {
-//            throw new ResourceNotFound("Sorry! No songs found for " + release_decade + ":( Please try again.");
-//        }
-//        return songDAO.getSongsByDecade(release_decade);
-//    }
+    public List<Song> getSongsByGenre(String genre) {
+        Optional<List<Song>> songByGenreOptional = Optional.ofNullable(songDAO.getSongsByGenre(genre));
+        if(songByGenreOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry, your music taste is too unique. " + genre + " has not been found :(");
+        }
+        return songDAO.getSongsByGenre(genre);
+    }
 
+    public List<Song> getSongsByYear(int release_year) {
+        LocalDate start_date = LocalDate.parse(release_year + "-01-01");
+        LocalDate end_date = LocalDate.parse(release_year + "-12-31");
 
-//    public List<Song> getSongsByArtist(int artist_id) {
-//        return songDAO.getSongsByArtist(artist_id);
-//    }
-//
-//    public List<Song> getSongsByAlbum(int album_id) {
-//        return songDAO.getSongsByAlbum(album_id);
-//    }
-//
-//    public List<Song> getSongsByGenre(String genre) {
-//        return songDAO.getSongsByGenre(genre);
-//    }
-//
-//    public List<Song> getSongsByYear(int release_year) {
-//        return songDAO.getSongsByAlbum(release_year);
-//    }
-//
-//    public List<Song> getSongsByDecade(int release_decade) {
-//        return songDAO.getSongsByDecade(release_decade);
-//    }
+        Optional<List<Song>> songByYearOptional = Optional.ofNullable(songDAO.getSongsByYear(start_date, end_date));
+        if(songByYearOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! No songs found for " + release_year + " :( Please try again.");
+        }
+
+        return songDAO.getSongsByYear(start_date, end_date);
+    }
+
+    public List<Song> getSongsByDecade(int release_decade) {
+        //Exception to check valid input decade - ends in 0
+        if(release_decade % 10 != 0){
+            throw new InvalidDecade("Please enter a valid decade in format yyy0");
+        }
+
+        LocalDate start_date = LocalDate.parse(release_decade + "-01-01");
+        LocalDate end_date = LocalDate.parse((release_decade+9) + "-12-31");
+
+        Optional<List<Song>> songByDecadeOptional = Optional.ofNullable(songDAO.getSongsByDecade(start_date, end_date));
+        if(songByDecadeOptional.isEmpty()) {
+            throw new ResourceNotFound("Sorry! No songs found for " + release_decade + "s :( Please try again.");
+        }
+        return songDAO.getSongsByDecade(start_date, end_date);
+    }
 
     //POST
     public String addSong(Song song) {
         //If song name and artist for song already exist DO NOT ADD SONG
-        Optional<Song> songOptional = songDAO.getSongByName(song.getSong_name());
-        if (songOptional.isPresent() && (songOptional.get().getArtist_id() == song.getArtist_id())) {
+        Optional<List<Song>> songOptional = Optional.ofNullable(songDAO.getSongByName(song.getSong_name()));
+        if (songOptional.isPresent() && (songOptional.get().contains(song.getArtist_id()))) {
             throw new Conflict("Unable to add song - it already exists!");
         }
         songDAO.addSong(song);
