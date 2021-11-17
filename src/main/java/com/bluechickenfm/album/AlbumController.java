@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
 
+
+@RestController
+@RequestMapping ("/api/v1/albums")
 public class AlbumController {
     private AlbumService albumService;
 

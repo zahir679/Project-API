@@ -68,9 +68,8 @@ class SongDataAccessServiceTest {
         List<Song> musicDb = List.of(firstSong, secondSong, thirdSong);
 
         // when
-
         when(songDAO.getAllSongs()).thenReturn(musicDb);
-        int actual = musicDb.size();
+        int actual = underTest.getAllSongs().size();
         // then
         assertThat(actual).isEqualTo(3);
 
@@ -88,6 +87,25 @@ class SongDataAccessServiceTest {
 //            // then
 //            assertThat(underTest.getAllSongs()).isEqualTo(firstSong);
 //        }
+
+
+    @Test
+    @DisplayName("Testing if the update method works correctly")
+    void updateSong() {
+        // given
+        Song firstSong = new Song(2, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        Optional <Song> songs = Optional.of(firstSong);
+        // when
+        when(songDAO.updateSong(2, firstSong)).thenReturn(1);
+        String updateResult = underTest.updateSong(2, firstSong);
+        //then
+        assertThat(updateResult).isEqualTo("Song updated!");
+
+
+
+    }
+
+
 
 
     @Test
