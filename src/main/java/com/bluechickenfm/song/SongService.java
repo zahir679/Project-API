@@ -18,8 +18,6 @@ import java.util.Optional;
 @Service
 public class SongService {
     private SongDAO songDAO;
-//    private AlbumDAO albumDAO;
-//    private ArtistDAO artistDAO;
 
     @Autowired
     public SongService(@Qualifier("chickenSong") SongDAO songDAO) {

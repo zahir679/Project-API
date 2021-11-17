@@ -33,18 +33,17 @@ public class ArtistController {
         return this.artistService.getArtistById(id);
     }
 
-//    //Method to get artist by name
-//    @GetMapping("/name")
-//    public @ResponseBody
-//    List<Artist> getArtistByName(String name){
-//        return artistService.getArtistByName(name);
-//    }
+    //Method to get artist by name
+    @GetMapping("/name/{name}")
+    public @ResponseBody List<Artist> getArtistByName(@PathVariable String name){
+        return artistService.getArtistByName(name);
+    }
 
-//        //Method to get artists by nationality
-//    @GetMapping("/{nationality}")
-//    public @ResponseBody List<Artist> getArtistsByNationality(@PathVariable String nationality){
-//        return artistService.getArtistsByGenre(nationality);
-//    }
+        //Method to get artists by nationality
+    @GetMapping("/{nationality}")
+    public @ResponseBody List<Artist> getArtistsByNationality(@PathVariable String nationality){
+        return artistService.getArtistsByNationality(nationality);
+    }
 
 //        //Method to get artist by biggest hit
 //    @GetMapping("/{biggest_hit}")

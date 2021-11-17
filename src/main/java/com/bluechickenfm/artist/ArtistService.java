@@ -2,11 +2,15 @@ package com.bluechickenfm.artist;
 
 import com.bluechickenfm.album.Album;
 import com.bluechickenfm.album.AlbumDAO;
+import com.bluechickenfm.exception.ResourceNotFound;
+import com.bluechickenfm.song.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ArtistService {
 
@@ -34,5 +38,17 @@ public class ArtistService {
 
     public void deleteArtist(int id) {
         this.artistDAO.deleteArtist(id);
+    }
+
+    public List<Artist> getArtistByName(String name) {
+        Optional<List<Artist>> artistByNameOptional = Optional.ofNullable(artistDAO.getArtistByName(name));
+        if(artistByNameOptional.get().isEmpty()) {
+            throw new ResourceNotFound("Sorry! The song " + name + " has not been found :( Please try again.");
+        }
+        return artistDAO.getArtistByName(name);
+    }
+    
+    public List<Artist> getArtistsByNationality(String nationality) {
+        return artistDAO.getArtistByNationality(nationality);
     }
 }

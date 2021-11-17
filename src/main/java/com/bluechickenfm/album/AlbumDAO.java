@@ -1,5 +1,8 @@
 package com.bluechickenfm.album;
 
+import com.bluechickenfm.song.Song;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AlbumDAO {
@@ -8,4 +11,9 @@ public interface AlbumDAO {
     int addAlbum(Album album);
     int updateAlbum(int id, Album album);
     int deleteAlbum(int id);
+    List<Album> getAlbumByName(String name);
+    List<Album> getAlbumsByArtist(int artist_id);
+    List<Album> getAlbumsByGenre(String genre);
+    List<Album> getAlbumsByYear(LocalDate start_date, LocalDate end_date);
+    List<Album> getAlbumsByDecade(LocalDate start_date, LocalDate end_date);
 }
