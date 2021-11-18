@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-public class ArtistDataAccessServiceTest {
+public class ArtistServiceTest {
 
     private ArtistDAO artistDAO;
     private ArtistService underTest;

@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
-public class albumDataAccessServiceTest {
+public class AlbumServiceTest {
     private AlbumDAO albumDAO;
     private AlbumService underTest;
 
