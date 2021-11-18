@@ -65,15 +65,19 @@ class SongDataAccessServiceTest {
     }
 
     @Test
-    @DisplayName("Test to get song by name")
+    @DisplayName("Test the get song by name method")
     void getSongByName(){
         //given
-        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-        List<Song> songs = List.of(firstSong);
+        Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118,
+                LocalDate.of(2018, 9, 15), "Korean", "Spotify");
+        Song secondSong= new Song(2, "Ideal" , "K-pop", 210, 118 ,  118,
+                LocalDate.of(2018,10,15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong, secondSong);
         //when
-        when(songDAO.getSongByName("My Luv")).thenReturn(songs);
+        when(songDAO.getSongByName("My Luv")).thenReturn(Collections.singletonList(songs.get(1)));
         List<Song> actual = underTest.getSongByName("My Luv");
-        assertThat(actual).isEqualTo(List.of(firstSong));
+        //then
+        assertThat(actual).isEqualTo(List.of(songs.get(1)));
 
     }
 
@@ -82,9 +86,11 @@ class SongDataAccessServiceTest {
     void getSongByNameThrowsException() {
         // given
         Song firstSong = new Song(1, "My Luv", "K-pop", 180, 118, 118, LocalDate.of(2018, 9, 15), "Korean", "Spotify");
-        List<Song> songs = List.of(firstSong);
+        Song secondSong= new Song(2, "Ideal" , "K-pop", 210, 118 ,  118,
+                 LocalDate.of(2018,10,15), "Korean", "Spotify");
+        List<Song> songs = List.of(firstSong,secondSong);
 
-        when(songDAO.getSongByName(eq("My Luv"))).thenReturn(songs);
+        when(songDAO.getSongByName(eq("My Luv"))).thenReturn(List.of(firstSong));
 
         // when
         assertThatThrownBy(() -> underTest.getSongByName("My Luver"))
