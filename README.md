@@ -119,6 +119,38 @@ To get a local copy of this project up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+The general format for the JSON objects are as below.
+
+### Song
+{
+"id": 1,
+"song_name": "My Luv",
+"genre": "K-pop",
+"duration": 180,
+"artist_id": 118,
+"album_id": 118,
+"release_date": "2018-09-15",
+"languages": "Korean",
+"platform": "Spotify"
+},
+### Album
+{
+"id": 1,
+"album_name": "Views",
+"artist_id": 1,
+"genre": "Hip-Hop",
+"release_date": "2016-04-29",
+"number_of_tracks": 20
+},
+### Artist
+{
+"id": 1,
+"artist_name": "Drake",
+"nationality": "Canadian",
+"biggest_hit": "One Dance"
+}
+
+### HTTP Request Paths
 The following table describes all the paths for the HTTP requests and their respective functionalities. 
 
 HTTP Request Path | Request Type | Description |
