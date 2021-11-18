@@ -1,7 +1,5 @@
 [comment]: <> ( https://www.markdownguide.org/basic-syntax/#reference-style-links)
 
-[![Contributors][contributors-shield]][contributors-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -43,9 +41,11 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+      <ul>
+        <li><a href="#JSON Object Formats">JSON Object Formats</a></li>
+        <li><a href="#HTTP Request Paths">HTTP Request Paths</a></li>
+      </ul>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -56,9 +56,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Our team, BlueChickenFM, was given five working days to create a back-end application consisting of an API and database with contents of our choosing. It was required that at a minimum, the API should include GET and POST requests, using Java, Spring and an SQL database. In response to this brief, we created a music API. The database consists of three tables: artists, albums, and songs, each with their own respective classes. The dependencies of the project include Spring Boot and Hikari and Flyway for the database migrations.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
+###Aim
+The aim of the project is to produce a music library application where users can search a database for songs based on genre, artists, album name, release year and release decade similar to Spotify or Apple Music. The user should be able to access a JSON format set of data about the songs. There should also be the functionality to add new songs, artists and albums into the existing database. The user should also be able to check data about the artists and albums associated with the songs.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -119,9 +120,10 @@ To get a local copy of this project up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+### JSON Object Formats
 The general format for the JSON objects are as below.
 
-### Song
+#### Song
 {
 "id": 1,
 "song_name": "My Luv",
@@ -133,7 +135,7 @@ The general format for the JSON objects are as below.
 "languages": "Korean",
 "platform": "Spotify"
 },
-### Album
+#### Album
 {
 "id": 1,
 "album_name": "Views",
@@ -142,7 +144,7 @@ The general format for the JSON objects are as below.
 "release_date": "2016-04-29",
 "number_of_tracks": 20
 },
-### Artist
+#### Artist
 {
 "id": 1,
 "artist_name": "Drake",
