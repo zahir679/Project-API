@@ -58,7 +58,7 @@
 
 Our team, BlueChickenFM, was given five working days to create a back-end application consisting of an API and database with contents of our choosing. It was required that at a minimum, the API should include GET and POST requests, using Java, Spring and an SQL database. In response to this brief, we created a music API. The database consists of three tables: artists, albums, and songs, each with their own respective classes. The dependencies of the project include Spring Boot and Hikari and Flyway for the database migrations.
 
-###Aim
+### Aim
 The aim of the project is to produce a music library application where users can search a database for songs based on genre, artists, album name, release year and release decade similar to Spotify or Apple Music. The user should be able to access a JSON format set of data about the songs. There should also be the functionality to add new songs, artists and albums into the existing database. The user should also be able to check data about the artists and albums associated with the songs.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -216,8 +216,6 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- CONTACT -->
 ## Contact
-
-Your Name - Blue Chicken FM
 
 Project Link: [https://github.com/zahir679/Project-API](https://github.com/zahir679/Project-API)
 
