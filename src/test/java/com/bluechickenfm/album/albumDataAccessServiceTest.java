@@ -73,7 +73,7 @@ public class albumDataAccessServiceTest {
     }
 
     @Test
-    @DisplayName("Test to see if get album method throws exception when name is incorrect")
+    @DisplayName("Test to see if get album by name method throws exception when name is incorrect")
     void getAlbumByNameThrowsException(){
         //given
         Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
@@ -160,8 +160,8 @@ public class albumDataAccessServiceTest {
         assertThat(actual).isEqualTo(List.of(firstAlbum));
     }
     @Test
-    @DisplayName("test to see if get album by name method throws exception when album is incorrect")
-    void getArtistByNameThrowsException() {
+    @DisplayName("test to see if get album by artist ID method throws exception when album ID is incorrect")
+    void getAlbumByArtistThrowsException() {
         // given
         Album firstAlbum = new Album(1, "Views", 1, "Hip-Hop",
                 LocalDate.of(2016,4,29), 20);
@@ -169,12 +169,12 @@ public class albumDataAccessServiceTest {
                 LocalDate.of(1976,10,11), 10);
         List<Album> albums = List.of(firstAlbum, secondAlbum);
 
-        when(albumDAO.getAlbumsByArtist(1)).thenReturn(List.of(firstAlbum));
+        when(albumDAO.getAlbumsByArtist(1)).thenReturn(List.of(firstAlbum,secondAlbum));
 
         // when
-        assertThatThrownBy(() -> underTest.getAlbumsByArtist(2))
+        assertThatThrownBy(() -> underTest.getAlbumsByArtist(3))
                 .isInstanceOf(ResourceNotFound.class)
-                .hasMessageContaining("Sorry! An album by artist " + 2 +" has not been found :( Please try again.");
+                .hasMessageContaining("Sorry! An album by artist " + 3 +" has not been found :( Please try again.");
 
         verify(albumDAO, never()).getAlbumsByArtist(1);
     }
