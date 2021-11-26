@@ -12,7 +12,7 @@ import java.util.function.ToDoubleBiFunction;
 @RestController
 @RequestMapping ("/api/v1/artists")
 public class ArtistController {
-   private ArtistService artistService;
+    private ArtistService artistService;
 
     public ArtistController(ArtistService artistService) {
         this.artistService = artistService;
@@ -33,24 +33,23 @@ public class ArtistController {
         return this.artistService.getArtistById(id);
     }
 
-//    //Method to get artist by name
-//    @GetMapping("/name")
-//    public @ResponseBody
-//    List<Artist> getArtistByName(String name){
-//        return artistService.getArtistByName(name);
-//    }
+    //Method to get artist by name
+    @GetMapping("/name/{name}")
+    public @ResponseBody List<Artist> getArtistByName(@PathVariable String name){
+        return artistService.getArtistByName(name);
+    }
 
-//        //Method to get artists by nationality
-//    @GetMapping("/{nationality}")
-//    public @ResponseBody List<Artist> getArtistsByNationality(@PathVariable String nationality){
-//        return artistService.getArtistsByGenre(nationality);
-//    }
+        //Method to get artists by nationality
+    @GetMapping("/nationality/{nationality}")
+    public @ResponseBody List<Artist> getArtistsByNationality(@PathVariable String nationality){
+        return artistService.getArtistsByNationality(nationality);
+    }
 
-//        //Method to get artist by biggest hit
-//    @GetMapping("/{biggest_hit}")
-//    public @ResponseBody List<Artist> getArtistByBiggestHit(@PathVariable String biggest_hit){
-//        return artistService.getArtistByBiggestHit(biggest_hit);
-//    }
+        //Method to get artist by biggest hit
+    @GetMapping("/biggest_hit/{biggest_hit}")
+    public @ResponseBody List<Artist> getArtistByBiggestHit(@PathVariable String biggest_hit){
+        return artistService.getArtistByBiggestHit(biggest_hit);
+    }
 
     //TODO Create a get album by decade function
 
